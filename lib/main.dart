@@ -10,16 +10,16 @@ import 'package:demo_app/screens/user_detail_page.dart';
 import 'package:demo_app/screens/users_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:demo_app/themes/custom_theme.dart';
+// import 'package:demo_app/themes/custom_theme.dart';
 
-void main() async {
+void main() {
   //theme initialize
-  await CustomTheme.initialize();
+  // CustomTheme.initialize();
   runApp(const MyApp());
 }
 
 //go_router 를 통한 router 설정
-final _router = GoRouter(initialLocation: '/', routes: [
+final _router = GoRouter(initialLocation: '/', routes: <RouteBase>[
   GoRoute(
       path: '/userspage',
       name: 'userspage',
@@ -30,7 +30,7 @@ final _router = GoRouter(initialLocation: '/', routes: [
       builder: (context, state) => const UserDetailPage()),
   GoRoute(
       path: '/',
-      name: 'homepage',
+      // name: 'homepage',
       builder: (context, state) => const HomePage()),
   GoRoute(
       path: '/subonepage',

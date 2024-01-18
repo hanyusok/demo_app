@@ -27,14 +27,15 @@ abstract class CustomTheme {
         : LightModeTheme();
   }
 
-  late Color primary;
+// color 입력해야
+  late Color primary = const Color(0xFF37474F);
   late Color secondary;
   late Color tertiary;
   late Color alternate;
   late Color primaryText;
   late Color secondaryText;
   late Color primaryBackground;
-  late Color secondaryBackground;
+  late Color secondaryBackground = const Color(0xFFFFF0B2);
   late Color accent1;
   late Color accent2;
   late Color accent3;
@@ -48,7 +49,7 @@ abstract class CustomTheme {
   late Color darkBackground;
   late Color textColor;
   late Color grayDark;
-  late Color grayLight;
+  late Color grayLight = const Color(0xFFD7CCC8);
 
   String get displayLargeFamily => typography.displayLargeFamily;
   TextStyle get displayLarge => typography.displayLarge;
