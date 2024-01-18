@@ -10,11 +10,15 @@ import 'package:demo_app/screens/user_detail_page.dart';
 import 'package:demo_app/screens/users_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:demo_app/themes/custom_theme.dart';
 
-void main() {
+void main() async {
+  //theme initialize
+  await CustomTheme.initialize();
   runApp(const MyApp());
 }
 
+//go_router 를 통한 router 설정
 final _router = GoRouter(initialLocation: '/', routes: [
   GoRoute(
       path: '/userspage',
@@ -23,18 +27,18 @@ final _router = GoRouter(initialLocation: '/', routes: [
   GoRoute(
       path: '/userdetail',
       name: 'userdetail',
-      builder: (context, state) =>
-          // const UserDetailPage(id: state.pathParameters['userId'])
-          const UserDetailPage()),
-  GoRoute(path: '/', builder: (context, state) => const HomePage(), routes: [
-    GoRoute(
-        path: 'subonepage', builder: (context, state) => const SubonePage()),
-    GoRoute(
-        path: 'subtwopage', builder: (context, state) => const SubtwoPage()),
-    GoRoute(
-        path: 'subthreepage',
-        builder: (context, state) => const SubthreePage()),
-  ]),
+      builder: (context, state) => const UserDetailPage()),
+  GoRoute(
+      path: '/',
+      name: 'homepage',
+      builder: (context, state) => const HomePage()),
+  GoRoute(
+      path: '/subonepage',
+      name: 'subonepage',
+      builder: (context, state) => const SubonePage()),
+  GoRoute(path: '/subtwopage', builder: (context, state) => const SubtwoPage()),
+  GoRoute(
+      path: '/subthreepage', builder: (context, state) => const SubthreePage()),
   GoRoute(
       path: '/pageone',
       name: 'pageone',
@@ -53,10 +57,22 @@ final _router = GoRouter(initialLocation: '/', routes: [
       builder: (context, state) => const PageFour()),
 ]);
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  // final ThemeMode _themeMode = CustomTheme.themeMode; /* custom setting*/
   // This widget is the root of your application.
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
@@ -64,9 +80,11 @@ class MyApp extends StatelessWidget {
       routerConfig: _router,
       title: 'Flutter Demo',
       theme: ThemeData(
+        fontFamily: 'Pretendard',
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+      themeMode: ThemeMode.system,
     );
   }
 }

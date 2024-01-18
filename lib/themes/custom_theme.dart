@@ -84,30 +84,7 @@ abstract class CustomTheme {
   Typography get typography => ThemeTypography(this);
 }
 
-class LightModeTheme extends CustomTheme {
-  late Color primary = const Color(0xFF4B39EF);
-  late Color secondary = const Color(0xFFFBAF7C);
-  late Color tertiary = const Color(0xFF39D2C0);
-  late Color alternate = const Color(0xFFFFFFFF);
-  late Color primaryText = const Color(0xFF1A1F24);
-  late Color secondaryText = const Color(0xFF8B97A2);
-  late Color primaryBackground = const Color(0xFFF1F4F8);
-  late Color secondaryBackground = const Color(0xFFFFFFFF);
-  late Color accent1 = const Color(0xFF616161);
-  late Color accent2 = const Color(0xFF757575);
-  late Color accent3 = const Color(0xFFE0E0E0);
-  late Color accent4 = const Color(0xFFEEEEEE);
-  late Color success = const Color(0xFF04A24C);
-  late Color warning = const Color(0xFFFCDC0C);
-  late Color error = const Color(0xFFE21C3D);
-  late Color info = const Color(0xFF1C4494);
-
-  late Color background = Color(0xFF1A1F24);
-  late Color darkBackground = Color(0xFF111417);
-  late Color textColor = Color(0xFFFFFFFF);
-  late Color grayDark = Color(0xFF57636C);
-  late Color grayLight = Color(0xFF8B97A2);
-}
+class LightModeTheme extends CustomTheme {}
 
 abstract class Typography {
   String get displayLargeFamily;
@@ -147,105 +124,135 @@ class ThemeTypography extends Typography {
 
   final CustomTheme theme;
 
-  String get displayLargeFamily => 'Poppins';
+  @override
+  String get displayLargeFamily => 'Pretendard';
+  @override
   TextStyle get displayLarge => GoogleFonts.getFont(
         'Poppins',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 57.0,
       );
+  @override
   String get displayMediumFamily => 'Poppins';
+  @override
   TextStyle get displayMedium => GoogleFonts.getFont(
         'Poppins',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 45.0,
       );
+  @override
   String get displaySmallFamily => 'Outfit';
+  @override
   TextStyle get displaySmall => GoogleFonts.getFont(
         'Outfit',
         color: theme.primaryText,
         fontWeight: FontWeight.w500,
         fontSize: 32.0,
       );
+  @override
   String get headlineLargeFamily => 'Poppins';
+  @override
   TextStyle get headlineLarge => GoogleFonts.getFont(
         'Poppins',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 32.0,
       );
+  @override
   String get headlineMediumFamily => 'Outfit';
+  @override
   TextStyle get headlineMedium => GoogleFonts.getFont(
         'Outfit',
         color: theme.primary,
         fontWeight: FontWeight.w500,
         fontSize: 28.0,
       );
+  @override
   String get headlineSmallFamily => 'Outfit';
+  @override
   TextStyle get headlineSmall => GoogleFonts.getFont(
         'Outfit',
         color: theme.primaryText,
         fontWeight: FontWeight.w500,
         fontSize: 20.0,
       );
+  @override
   String get titleLargeFamily => 'Poppins';
+  @override
   TextStyle get titleLarge => GoogleFonts.getFont(
         'Poppins',
         color: theme.primaryText,
         fontWeight: FontWeight.w500,
         fontSize: 22.0,
       );
+  @override
   String get titleMediumFamily => 'Outfit';
+  @override
   TextStyle get titleMedium => GoogleFonts.getFont(
         'Outfit',
         color: theme.secondaryText,
         fontWeight: FontWeight.w500,
         fontSize: 18.0,
       );
+  @override
   String get titleSmallFamily => 'Outfit';
+  @override
   TextStyle get titleSmall => GoogleFonts.getFont(
         'Outfit',
         color: theme.alternate,
         fontWeight: FontWeight.normal,
         fontSize: 18.0,
       );
+  @override
   String get labelLargeFamily => 'Poppins';
+  @override
   TextStyle get labelLarge => GoogleFonts.getFont(
         'Poppins',
         color: theme.primaryText,
         fontWeight: FontWeight.w500,
         fontSize: 14.0,
       );
+  @override
   String get labelMediumFamily => 'Poppins';
+  @override
   TextStyle get labelMedium => GoogleFonts.getFont(
         'Poppins',
         color: theme.primaryText,
         fontWeight: FontWeight.w500,
         fontSize: 12.0,
       );
+  @override
   String get labelSmallFamily => 'Poppins';
+  @override
   TextStyle get labelSmall => GoogleFonts.getFont(
         'Poppins',
         color: theme.primaryText,
         fontWeight: FontWeight.w500,
         fontSize: 11.0,
       );
+  @override
   String get bodyLargeFamily => 'Poppins';
+  @override
   TextStyle get bodyLarge => GoogleFonts.getFont(
         'Poppins',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 16.0,
       );
+  @override
   String get bodyMediumFamily => 'Outfit';
+  @override
   TextStyle get bodyMedium => GoogleFonts.getFont(
         'Outfit',
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 14.0,
       );
+  @override
   String get bodySmallFamily => 'Outfit';
+  @override
   TextStyle get bodySmall => GoogleFonts.getFont(
         'Outfit',
         color: theme.secondaryText,
@@ -254,37 +261,7 @@ class ThemeTypography extends Typography {
       );
 }
 
-class DarkModeTheme extends CustomTheme {
-  @Deprecated('Use primary instead')
-  Color get primaryColor => primary;
-  @Deprecated('Use secondary instead')
-  Color get secondaryColor => secondary;
-  @Deprecated('Use tertiary instead')
-  Color get tertiaryColor => tertiary;
-
-  late Color primary = const Color(0xFF4B39EF);
-  late Color secondary = const Color(0xFFFBAF7C);
-  late Color tertiary = const Color(0xFF39D2C0);
-  late Color alternate = const Color(0xFFFFFFFF);
-  late Color primaryText = const Color(0xFFFFFFFF);
-  late Color secondaryText = const Color(0xFF8B97A2);
-  late Color primaryBackground = const Color(0xFF1A1F24);
-  late Color secondaryBackground = const Color(0xFF111417);
-  late Color accent1 = const Color(0xFFEEEEEE);
-  late Color accent2 = const Color(0xFFE0E0E0);
-  late Color accent3 = const Color(0xFF757575);
-  late Color accent4 = const Color(0xFF616161);
-  late Color success = const Color(0xFF04A24C);
-  late Color warning = const Color(0xFFFCDC0C);
-  late Color error = const Color(0xFFE21C3D);
-  late Color info = const Color(0xFF1C4494);
-
-  late Color background = Color(0xFF1A1F24);
-  late Color darkBackground = Color(0xFF111417);
-  late Color textColor = Color(0xFFFFFFFF);
-  late Color grayDark = Color(0xFF57636C);
-  late Color grayLight = Color(0xFF8B97A2);
-}
+class DarkModeTheme extends CustomTheme {}
 
 extension TextStyleHelper on TextStyle {
   TextStyle override({

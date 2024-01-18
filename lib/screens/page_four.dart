@@ -11,7 +11,7 @@ class _PageFourState extends State<PageFour> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Text('Page four'),
+      body: Text('4번째 페이지 Page four'),
     );
   }
 }
