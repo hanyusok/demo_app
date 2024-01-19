@@ -13,8 +13,6 @@ import 'package:go_router/go_router.dart';
 // import 'package:demo_app/themes/custom_theme.dart';
 
 void main() {
-  //theme initialize
-  // CustomTheme.initialize();
   runApp(const MyApp());
 }
 

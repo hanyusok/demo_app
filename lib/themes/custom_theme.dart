@@ -28,14 +28,14 @@ abstract class CustomTheme {
   }
 
 // color 입력해야
-  late Color primary = const Color(0xFF37474F);
+  late Color? primary = Colors.blueGrey[900];
   late Color secondary;
   late Color tertiary;
   late Color alternate;
   late Color primaryText;
   late Color secondaryText;
-  late Color primaryBackground;
-  late Color secondaryBackground = const Color(0xFFFFF0B2);
+  late Color? primaryBackground = Colors.amber[700];
+  late Color? secondaryBackground = Colors.amber[200];
   late Color accent1;
   late Color accent2;
   late Color accent3;
