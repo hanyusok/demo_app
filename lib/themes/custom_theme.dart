@@ -31,9 +31,9 @@ abstract class CustomTheme {
   late Color? primary = Colors.blueGrey[900];
   late Color secondary;
   late Color? tertiary = Colors.lightBlue[400];
-  late Color alternate;
-  late Color primaryText;
-  late Color secondaryText;
+  late Color? alternate = Colors.red[300];
+  late Color? primaryText = Colors.blueGrey[900];
+  late Color? secondaryText = Colors.cyan[900];
   late Color? primaryBackground = Colors.amber[700];
   late Color? secondaryBackground = Colors.amber[200];
   late Color accent1;
