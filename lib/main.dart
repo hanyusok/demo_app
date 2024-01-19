@@ -1,4 +1,6 @@
-import 'package:demo_app/screens/home_page.dart';
+// import 'package:demo_app/screens/home_page.dart';
+import 'package:demo_app/screens/logins/login_page.dart';
+import 'package:demo_app/screens/logins/sign_up_page.dart';
 import 'package:demo_app/screens/page_four.dart';
 import 'package:demo_app/screens/page_one.dart';
 import 'package:demo_app/screens/page_three.dart';
@@ -19,6 +21,14 @@ void main() {
 //go_router 를 통한 router 설정
 final _router = GoRouter(initialLocation: '/', routes: <RouteBase>[
   GoRoute(
+      path: '/login',
+      name: 'login',
+      builder: (context, state) => const LoginPage()),
+  GoRoute(
+      path: '/signup',
+      name: 'signup',
+      builder: (context, state) => const SignUpPage()),
+  GoRoute(
       path: '/userspage',
       name: 'userspage',
       builder: (context, state) => const UsersPage()),
@@ -29,7 +39,8 @@ final _router = GoRouter(initialLocation: '/', routes: <RouteBase>[
   GoRoute(
       path: '/',
       // name: 'homepage',
-      builder: (context, state) => const HomePage()),
+      // builder: (context, state) => const HomePage()),
+      builder: (context, state) => const LoginPage()),
   GoRoute(
       path: '/subonepage',
       name: 'subonepage',

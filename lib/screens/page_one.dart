@@ -30,7 +30,7 @@ class _PageOneState extends State<PageOne> {
                 ]),
               ),
               // Expanded(child: ),
-              Text('Page One'),
+              Text('Page One 신청리스트, 진행경과, 추가, 조회'),
             ],
           )),
       floatingActionButton: FloatingActionButton(
