@@ -13,8 +13,10 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage>
     with SingleTickerProviderStateMixin {
   final formKey = GlobalKey<FormState>();
-  final TextEditingController? _emailController = TextEditingController();
-  final TextEditingController? _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _passwordConfirmController =
+      TextEditingController();
   late TabController _tabController;
 
   @override
@@ -41,7 +43,7 @@ class _LoginPageState extends State<LoginPage>
                     fit: BoxFit.fitWidth,
                     image:
                         Image.asset('assets/images/page_bg_transparent@2x.png')
-                            .image,
+                            .image, /* 나중에 이미지 바꿔라!! */
                   )),
                   child: Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(
@@ -94,8 +96,8 @@ class _LoginPageState extends State<LoginPage>
                                       CustomTheme.of(context).tertiary,
                                   indicatorWeight: 3.0,
                                   tabs: const [
-                                    Tab(text: 'Login'),
-                                    Tab(text: 'Register'),
+                                    Tab(text: '로그인'),
+                                    Tab(text: '계정만들기'),
                                   ],
                                   controller: _tabController,
                                   onTap: (i) async {
@@ -122,12 +124,11 @@ class _LoginPageState extends State<LoginPage>
                                               controller: _emailController,
                                               obscureText: false,
                                               decoration: InputDecoration(
-                                                labelText: 'Email Address',
+                                                labelText: '이메일:Email',
                                                 labelStyle:
                                                     CustomTheme.of(context)
                                                         .bodySmall,
-                                                hintText:
-                                                    'Enter your email... ',
+                                                hintText: '입력필수... ',
                                                 hintStyle:
                                                     CustomTheme.of(context)
                                                         .bodySmall,
@@ -187,12 +188,11 @@ class _LoginPageState extends State<LoginPage>
                                               controller: _passwordController,
                                               obscureText: true,
                                               decoration: InputDecoration(
-                                                labelText: 'Confirm Password',
+                                                labelText: '비밀번호: Password',
                                                 labelStyle:
                                                     CustomTheme.of(context)
                                                         .bodySmall,
-                                                hintText:
-                                                    'Enter your password... ',
+                                                hintText: '입력필수... ',
                                                 hintStyle:
                                                     CustomTheme.of(context)
                                                         .bodySmall,
@@ -253,6 +253,203 @@ class _LoginPageState extends State<LoginPage>
                                               style: CustomTheme.of(context)
                                                   .bodyMedium,
                                               validator: null,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0.0, 12.0, 0.0, 0.0),
+                                            child: TextFormField(
+                                              controller:
+                                                  _passwordConfirmController,
+                                              obscureText: true,
+                                              decoration: InputDecoration(
+                                                labelText: 'Confirm Password',
+                                                labelStyle:
+                                                    CustomTheme.of(context)
+                                                        .bodySmall,
+                                                hintText:
+                                                    'Enter your password...',
+                                                hintStyle:
+                                                    CustomTheme.of(context)
+                                                        .bodySmall,
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                    color: Color(0x00000000),
+                                                    width: 1.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                    color: Color.fromARGB(
+                                                        0, 49, 49, 49),
+                                                    width: 1.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                                errorBorder: OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                    color: Color(0x00000000),
+                                                    width: 1.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                                focusedErrorBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                    color: Color(0x00000000),
+                                                    width: 1.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.0),
+                                                ),
+                                                filled: true,
+                                                fillColor:
+                                                    CustomTheme.of(context)
+                                                        .primaryBackground,
+                                                contentPadding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                        20.0, 24.0, 20.0, 24.0),
+                                                suffixIcon: InkWell(
+                                                  onTap: () => setState(() {}),
+                                                  child: const Icon(
+                                                    Icons.visibility_outlined,
+                                                    /*   icon  : ? 구문 삽입*/
+                                                    color: Color(0x98FFFFFF),
+                                                    size: 20.0,
+                                                  ),
+                                                ),
+                                              ),
+                                              style: CustomTheme.of(context)
+                                                  .bodyMedium,
+                                              // validator: _model
+                                              //     .passwordConfirmControllerValidator
+                                              //     .asValidator(context),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0.0, 24.0, 0.0, 24.0),
+                                            child: FFButtonWidget(
+                                              onPressed: () async {
+                                                GoRouter.of(context)
+                                                    .prepareAuthEvent();
+
+                                                final user = await authManager
+                                                    .createAccountWithEmail(
+                                                  context,
+                                                  _model.emailAddressController
+                                                      .text,
+                                                  _model
+                                                      .passwordCreateController
+                                                      .text,
+                                                );
+                                                if (user == null) {
+                                                  return;
+                                                }
+
+                                                context.pushNamedAuth(
+                                                    'completeProfile',
+                                                    context.mounted);
+                                              },
+                                              text: FFLocalizations.of(context)
+                                                  .getText(
+                                                'nk4obo9x' /* Create Account */,
+                                              ),
+                                              options: FFButtonOptions(
+                                                width: 230.0,
+                                                height: 50.0,
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 0.0, 0.0, 0.0),
+                                                iconPadding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                            0.0, 0.0, 0.0, 0.0),
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                textStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleSmall
+                                                        .override(
+                                                          fontFamily: 'Outfit',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .textColor,
+                                                        ),
+                                                elevation: 3.0,
+                                                borderSide: BorderSide(
+                                                  color: Colors.transparent,
+                                                  width: 1.0,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(40.0),
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 20.0, 0.0, 24.0),
+                                            child: FFButtonWidget(
+                                              onPressed: () async {
+                                                GoRouter.of(context)
+                                                    .prepareAuthEvent();
+                                                final user = await authManager
+                                                    .signInAnonymously(context);
+                                                if (user == null) {
+                                                  return;
+                                                }
+
+                                                context.pushNamedAuth(
+                                                    'homePage',
+                                                    context.mounted);
+                                              },
+                                              text: FFLocalizations.of(context)
+                                                  .getText(
+                                                '1sbpdruq' /* Continue as Guest */,
+                                              ),
+                                              options: FFButtonOptions(
+                                                width: 230.0,
+                                                height: 50.0,
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 0.0, 0.0, 0.0),
+                                                iconPadding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                            0.0, 0.0, 0.0, 0.0),
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryBackground,
+                                                textStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleSmall
+                                                        .override(
+                                                          fontFamily: 'Outfit',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primaryText,
+                                                        ),
+                                                elevation: 0.0,
+                                                borderSide: BorderSide(
+                                                  color: Colors.transparent,
+                                                  width: 1.0,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(40.0),
+                                              ),
                                             ),
                                           ),
                                         ])),
