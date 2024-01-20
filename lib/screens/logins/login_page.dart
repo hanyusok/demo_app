@@ -83,7 +83,7 @@ class _LoginPageState extends State<LoginPage>
                                 alignment: const Alignment(0.0, 0),
                                 child: TabBar(
                                   isScrollable: true,
-                                  labelColor: CustomTheme.of(context).tertiary,
+                                  labelColor: CustomTheme.of(context).primary,
                                   unselectedLabelColor:
                                       CustomTheme.of(context).grayLight,
                                   labelPadding:
