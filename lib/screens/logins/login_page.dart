@@ -124,7 +124,7 @@ class _LoginPageState extends State<LoginPage>
                                               controller: _emailController,
                                               obscureText: false,
                                               decoration: InputDecoration(
-                                                labelText: '이메일:Email',
+                                                labelText: '이메일',
                                                 labelStyle:
                                                     CustomTheme.of(context)
                                                         .bodySmall,
@@ -188,7 +188,7 @@ class _LoginPageState extends State<LoginPage>
                                               controller: _passwordController,
                                               obscureText: true,
                                               decoration: InputDecoration(
-                                                labelText: '비밀번호: Password',
+                                                labelText: '비밀번호',
                                                 labelStyle:
                                                     CustomTheme.of(context)
                                                         .bodySmall,
@@ -338,119 +338,97 @@ class _LoginPageState extends State<LoginPage>
                                             ),
                                           ),
                                           Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0.0, 24.0, 0.0, 24.0),
-                                            child: FFButtonWidget(
-                                              onPressed: () async {
-                                                GoRouter.of(context)
-                                                    .prepareAuthEvent();
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                      0.0, 24.0, 0.0, 24.0),
+                                              child: ElevatedButton(
+                                                onPressed: () async {
+                                                  // GoRouter.of(context)
+                                                  //       .prepareAuthEvent();
 
-                                                final user = await authManager
-                                                    .createAccountWithEmail(
-                                                  context,
-                                                  _model.emailAddressController
-                                                      .text,
-                                                  _model
-                                                      .passwordCreateController
-                                                      .text,
-                                                );
-                                                if (user == null) {
-                                                  return;
-                                                }
+                                                  //   final user = await authManager
+                                                  //       .createAccountWithEmail(
+                                                  //     context,
+                                                  //     _model.emailAddressController
+                                                  //         .text,
+                                                  //     _model
+                                                  //         .passwordCreateController
+                                                  //         .text,
+                                                  //   );
+                                                  //   if (user == null) {
+                                                  //     return;
+                                                  //   }
 
-                                                context.pushNamedAuth(
-                                                    'completeProfile',
-                                                    context.mounted);
-                                              },
-                                              text: FFLocalizations.of(context)
-                                                  .getText(
-                                                'nk4obo9x' /* Create Account */,
+                                                  //   context.pushNamedAuth(
+                                                  //       'completeProfile',
+                                                  //       context.mounted);
+                                                },
+                                                style: ElevatedButton.styleFrom(
+                                                    foregroundColor: Colors
+                                                        .white,
+                                                    backgroundColor:
+                                                        CustomTheme.of(context)
+                                                            .primary,
+                                                    elevation: 3.0,
+                                                    minimumSize: const Size(
+                                                        230, 50),
+                                                    textStyle: const TextStyle(
+                                                        fontSize: 18),
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        40))),
+                                                child: const Text('계정 만들기'),
+                                              )
+                                              // FFButtonWidget(
+
+                                              //   borderSide: BorderSide(
+                                              //     color: Colors.transparent,
+                                              //     width: 1.0,
+                                              //   ),
+                                              //   borderRadius:
+                                              //       BorderRadius.circular(40.0),
+                                              // ),
                                               ),
-                                              options: FFButtonOptions(
-                                                width: 230.0,
-                                                height: 50.0,
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 0.0, 0.0, 0.0),
-                                                iconPadding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                            0.0, 0.0, 0.0, 0.0),
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primary,
-                                                textStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .titleSmall
-                                                        .override(
-                                                          fontFamily: 'Outfit',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .textColor,
-                                                        ),
-                                                elevation: 3.0,
-                                                borderSide: BorderSide(
-                                                  color: Colors.transparent,
-                                                  width: 1.0,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(40.0),
-                                              ),
-                                            ),
-                                          ),
                                           Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 20.0, 0.0, 24.0),
-                                            child: FFButtonWidget(
-                                              onPressed: () async {
-                                                GoRouter.of(context)
-                                                    .prepareAuthEvent();
-                                                final user = await authManager
-                                                    .signInAnonymously(context);
-                                                if (user == null) {
-                                                  return;
-                                                }
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0.0, 20.0, 0.0, 24.0),
+                                            child: ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                    foregroundColor: Colors
+                                                        .white,
+                                                    backgroundColor:
+                                                        CustomTheme.of(context)
+                                                            .primary,
+                                                    elevation: 3.0,
+                                                    minimumSize: const Size(
+                                                        230, 50),
+                                                    textStyle: const TextStyle(
+                                                        fontSize: 18),
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        40))),
+                                                onPressed: () async {
+                                                  //  GoRouter.of(context)
+                                                  //       .prepareAuthEvent();
+                                                  //   final user = await authManager
+                                                  //       .signInAnonymously(context);
+                                                  //   if (user == null) {
+                                                  //     return;
+                                                  //   }
 
-                                                context.pushNamedAuth(
-                                                    'homePage',
-                                                    context.mounted);
-                                              },
-                                              text: FFLocalizations.of(context)
-                                                  .getText(
-                                                '1sbpdruq' /* Continue as Guest */,
-                                              ),
-                                              options: FFButtonOptions(
-                                                width: 230.0,
-                                                height: 50.0,
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 0.0, 0.0, 0.0),
-                                                iconPadding:
-                                                    EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                            0.0, 0.0, 0.0, 0.0),
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryBackground,
-                                                textStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .titleSmall
-                                                        .override(
-                                                          fontFamily: 'Outfit',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryText,
-                                                        ),
-                                                elevation: 0.0,
-                                                borderSide: BorderSide(
-                                                  color: Colors.transparent,
-                                                  width: 1.0,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(40.0),
-                                              ),
-                                            ),
+                                                  //   context.pushNamedAuth(
+                                                  //       'homePage',
+                                                  //       context.mounted);
+                                                },
+                                                child:
+                                                    const Text('임시 계정으로 사용')),
                                           ),
                                         ])),
                                     /* button start here */

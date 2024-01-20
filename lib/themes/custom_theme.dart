@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const kThemeModeKey = '__theme_mode__';
@@ -28,14 +27,14 @@ abstract class CustomTheme {
   }
 
 // color 입력해야
-  late Color? primary = Colors.blueGrey[900];
+  late Color? primary = Colors.blueAccent[100];
   late Color secondary;
   late Color? tertiary = Colors.deepOrange[800];
   late Color? alternate = Colors.red[300];
   late Color? primaryText = Colors.blueGrey[900];
   late Color? secondaryText = Colors.cyan[900];
   late Color? primaryBackground = Colors.amber[700];
-  late Color? secondaryBackground = Colors.amber[200];
+  late Color? secondaryBackground = Colors.white;
   late Color accent1;
   late Color accent2;
   late Color accent3;
@@ -128,134 +127,116 @@ class ThemeTypography extends Typography {
   @override
   String get displayLargeFamily => 'Pretendard';
   @override
-  TextStyle get displayLarge => GoogleFonts.getFont(
-        'Poppins',
-        color: theme.primaryText,
-        fontWeight: FontWeight.normal,
-        fontSize: 57.0,
-      );
+  TextStyle get displayLarge => TextStyle(
+      color: theme.primaryText, fontWeight: FontWeight.normal, fontSize: 57.0);
   @override
-  String get displayMediumFamily => 'Poppins';
+  String get displayMediumFamily => 'Pretendard';
   @override
-  TextStyle get displayMedium => GoogleFonts.getFont(
-        'Poppins',
+  TextStyle get displayMedium => TextStyle(
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 45.0,
       );
   @override
-  String get displaySmallFamily => 'Outfit';
+  String get displaySmallFamily => 'Pretendard';
   @override
-  TextStyle get displaySmall => GoogleFonts.getFont(
-        'Outfit',
+  TextStyle get displaySmall => TextStyle(
         color: theme.primaryText,
         fontWeight: FontWeight.w500,
         fontSize: 32.0,
       );
   @override
-  String get headlineLargeFamily => 'Poppins';
+  String get headlineLargeFamily => 'Pretendard';
   @override
-  TextStyle get headlineLarge => GoogleFonts.getFont(
-        'Poppins',
+  TextStyle get headlineLarge => TextStyle(
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 32.0,
       );
   @override
-  String get headlineMediumFamily => 'Outfit';
+  String get headlineMediumFamily => 'Pretendard';
   @override
-  TextStyle get headlineMedium => GoogleFonts.getFont(
-        'Outfit',
+  TextStyle get headlineMedium => TextStyle(
         color: theme.primary,
         fontWeight: FontWeight.w500,
         fontSize: 28.0,
       );
   @override
-  String get headlineSmallFamily => 'Outfit';
+  String get headlineSmallFamily => 'Pretendard';
   @override
-  TextStyle get headlineSmall => GoogleFonts.getFont(
-        'Outfit',
+  TextStyle get headlineSmall => TextStyle(
         color: theme.primaryText,
         fontWeight: FontWeight.w500,
         fontSize: 20.0,
       );
   @override
-  String get titleLargeFamily => 'Poppins';
+  String get titleLargeFamily => 'Pretendard';
   @override
-  TextStyle get titleLarge => GoogleFonts.getFont(
-        'Poppins',
+  TextStyle get titleLarge => TextStyle(
         color: theme.primaryText,
         fontWeight: FontWeight.w500,
         fontSize: 22.0,
       );
   @override
-  String get titleMediumFamily => 'Outfit';
+  String get titleMediumFamily => 'Pretendard';
   @override
-  TextStyle get titleMedium => GoogleFonts.getFont(
-        'Outfit',
+  TextStyle get titleMedium => TextStyle(
         color: theme.secondaryText,
         fontWeight: FontWeight.w500,
         fontSize: 18.0,
       );
   @override
-  String get titleSmallFamily => 'Outfit';
+  String get titleSmallFamily => 'Pretendard';
   @override
-  TextStyle get titleSmall => GoogleFonts.getFont(
-        'Outfit',
+  TextStyle get titleSmall => TextStyle(
         color: theme.alternate,
         fontWeight: FontWeight.normal,
         fontSize: 18.0,
       );
   @override
-  String get labelLargeFamily => 'Poppins';
+  String get labelLargeFamily => 'Pretendard';
   @override
-  TextStyle get labelLarge => GoogleFonts.getFont(
-        'Poppins',
+  TextStyle get labelLarge => TextStyle(
         color: theme.primaryText,
         fontWeight: FontWeight.w500,
         fontSize: 14.0,
       );
   @override
-  String get labelMediumFamily => 'Poppins';
+  String get labelMediumFamily => 'Pretendard';
   @override
-  TextStyle get labelMedium => GoogleFonts.getFont(
-        'Poppins',
+  TextStyle get labelMedium => TextStyle(
         color: theme.primaryText,
         fontWeight: FontWeight.w500,
         fontSize: 12.0,
       );
   @override
-  String get labelSmallFamily => 'Poppins';
+  String get labelSmallFamily => 'Pretendard';
   @override
-  TextStyle get labelSmall => GoogleFonts.getFont(
-        'Poppins',
+  TextStyle get labelSmall => TextStyle(
         color: theme.primaryText,
         fontWeight: FontWeight.w500,
         fontSize: 11.0,
       );
   @override
-  String get bodyLargeFamily => 'Poppins';
+  String get bodyLargeFamily => 'Pretendard';
   @override
-  TextStyle get bodyLarge => GoogleFonts.getFont(
-        'Poppins',
+  TextStyle get bodyLarge => TextStyle(
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 16.0,
       );
   @override
-  String get bodyMediumFamily => 'Outfit';
+  String get bodyMediumFamily => 'Pretendard';
   @override
-  TextStyle get bodyMedium => GoogleFonts.getFont(
-        'Outfit',
+  TextStyle get bodyMedium => TextStyle(
         color: theme.primaryText,
         fontWeight: FontWeight.normal,
         fontSize: 14.0,
       );
   @override
-  String get bodySmallFamily => 'Outfit';
+  String get bodySmallFamily => 'Pretendard';
   @override
-  TextStyle get bodySmall => GoogleFonts.getFont(
-        'Outfit',
+  TextStyle get bodySmall => TextStyle(
         color: theme.secondaryText,
         fontWeight: FontWeight.normal,
         fontSize: 14.0,
@@ -277,8 +258,7 @@ extension TextStyleHelper on TextStyle {
     double? lineHeight,
   }) =>
       useGoogleFonts
-          ? GoogleFonts.getFont(
-              fontFamily!,
+          ? TextStyle(
               color: color ?? this.color,
               fontSize: fontSize ?? this.fontSize,
               letterSpacing: letterSpacing ?? this.letterSpacing,
