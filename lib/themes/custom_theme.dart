@@ -27,11 +27,11 @@ abstract class CustomTheme {
   }
 
 // color 입력해야
-  late Color? primary = Colors.indigo;
+  late Color? primary = Colors.indigo[400];
   late Color secondary;
   late Color? tertiary = Colors.tealAccent;
   late Color? alternate = Colors.grey[100];
-  late Color? primaryText = Colors.blueGrey[500];
+  late Color? primaryText = Colors.grey[800];
   late Color? secondaryText = Colors.grey[500];
   late Color? primaryBackground = Colors.grey[100];
   late Color? secondaryBackground = Colors.white;
@@ -46,7 +46,7 @@ abstract class CustomTheme {
 
   late Color background;
   late Color darkBackground;
-  late Color textColor;
+  late Color textColor = Colors.white;
   late Color grayDark;
   late Color grayLight = const Color(0xFFD7CCC8);
 
