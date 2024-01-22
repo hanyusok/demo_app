@@ -19,7 +19,8 @@ class _LoginPageState extends State<LoginPage>
       TextEditingController();
   late TabController _tabController;
   late bool _passwordLoginVisibility = true;
-  int get tabBarCurrentIndex => 0;
+  // int get tabBarCurrentIndex =>
+  //     _tabController != null ? _tabController.index : 0;
 
   @override
   void initState() {
@@ -274,88 +275,6 @@ class _LoginPageState extends State<LoginPage>
                                               validator: null,
                                             ),
                                           ),
-                                          // Padding(
-                                          //   padding: const EdgeInsetsDirectional
-                                          //       .fromSTEB(0.0, 12.0, 0.0, 0.0),
-                                          //   child: TextFormField(
-                                          //     controller:
-                                          //         _passwordConfirmController,
-                                          //     obscureText: true,
-                                          //     decoration: InputDecoration(
-                                          //       labelText: 'Confirm Password',
-                                          //       labelStyle:
-                                          //           CustomTheme.of(context)
-                                          //               .bodySmall,
-                                          //       hintText:
-                                          //           'Enter your password...',
-                                          //       hintStyle:
-                                          //           CustomTheme.of(context)
-                                          //               .bodySmall,
-                                          //       enabledBorder:
-                                          //           OutlineInputBorder(
-                                          //         borderSide: const BorderSide(
-                                          //           color: Color(0x00000000),
-                                          //           width: 1.0,
-                                          //         ),
-                                          //         borderRadius:
-                                          //             BorderRadius.circular(
-                                          //                 8.0),
-                                          //       ),
-                                          //       focusedBorder:
-                                          //           OutlineInputBorder(
-                                          //         borderSide: const BorderSide(
-                                          //           color: Color.fromARGB(
-                                          //               0, 49, 49, 49),
-                                          //           width: 1.0,
-                                          //         ),
-                                          //         borderRadius:
-                                          //             BorderRadius.circular(
-                                          //                 8.0),
-                                          //       ),
-                                          //       errorBorder: OutlineInputBorder(
-                                          //         borderSide: const BorderSide(
-                                          //           color: Color(0x00000000),
-                                          //           width: 1.0,
-                                          //         ),
-                                          //         borderRadius:
-                                          //             BorderRadius.circular(
-                                          //                 8.0),
-                                          //       ),
-                                          //       focusedErrorBorder:
-                                          //           OutlineInputBorder(
-                                          //         borderSide: const BorderSide(
-                                          //           color: Color(0x00000000),
-                                          //           width: 1.0,
-                                          //         ),
-                                          //         borderRadius:
-                                          //             BorderRadius.circular(
-                                          //                 8.0),
-                                          //       ),
-                                          //       filled: true,
-                                          //       fillColor:
-                                          //           CustomTheme.of(context)
-                                          //               .primaryBackground,
-                                          //       contentPadding:
-                                          //           const EdgeInsetsDirectional
-                                          //               .fromSTEB(
-                                          //               20.0, 24.0, 20.0, 24.0),
-                                          //       suffixIcon: InkWell(
-                                          //         onTap: () => setState(() {}),
-                                          //         child: const Icon(
-                                          //           Icons.visibility_outlined,
-                                          //           /*   icon  : ? 구문 삽입*/
-                                          //           color: Color(0x98FFFFFF),
-                                          //           size: 20.0,
-                                          //         ),
-                                          //       ),
-                                          //     ),
-                                          //     style: CustomTheme.of(context)
-                                          //         .bodyMedium,
-                                          //     // validator: _model
-                                          //     //     .passwordConfirmControllerValidator
-                                          //     //     .asValidator(context),
-                                          //   ),
-                                          // ),
                                           Padding(
                                               padding:
                                                   const EdgeInsetsDirectional
@@ -563,6 +482,337 @@ class _LoginPageState extends State<LoginPage>
                                     //         ),
                                     //       ],
                                     //     )),
+                                  ),
+
+                                  /* ----------- sign up view ------------*/
+                                  Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            24, 0, 24, 0),
+                                    child: SingleChildScrollView(
+                                        child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0, 20, 0, 0),
+                                            child: TextFormField(
+                                              controller: _emailController,
+                                              obscureText: false,
+                                              decoration: InputDecoration(
+                                                labelText: '이메일',
+                                                labelStyle:
+                                                    CustomTheme.of(context)
+                                                        .bodySmall,
+                                                hintText: '입력필수... ',
+                                                hintStyle:
+                                                    CustomTheme.of(context)
+                                                        .bodySmall,
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                    color: Color(0x00000000),
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                    color: Color(0x00000000),
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                errorBorder: OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                    color: Color(0x00000000),
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                focusedErrorBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                    color: Color(0x00000000),
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                filled: true,
+                                                fillColor:
+                                                    CustomTheme.of(context)
+                                                        .primaryBackground,
+                                                contentPadding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                        20, 24, 20, 24),
+                                              ),
+                                              style: CustomTheme.of(context)
+                                                  .bodyMedium,
+                                              validator:
+                                                  null, /* email validator 추가하자*/
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0, 12, 0, 0),
+                                            child: TextFormField(
+                                              controller: _passwordController,
+                                              obscureText: true,
+                                              decoration: InputDecoration(
+                                                labelText: '비밀번호',
+                                                labelStyle:
+                                                    CustomTheme.of(context)
+                                                        .bodySmall,
+                                                hintText: '입력필수... ',
+                                                hintStyle:
+                                                    CustomTheme.of(context)
+                                                        .bodySmall,
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                    color: Color(0x00000000),
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                    color: Color(0x00000000),
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                errorBorder: OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                    color: Color(0x00000000),
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                focusedErrorBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                    color: Color(0x00000000),
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                filled: true,
+                                                fillColor:
+                                                    CustomTheme.of(context)
+                                                        .primaryBackground,
+                                                contentPadding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                        20, 24, 20, 24),
+                                                suffixIcon: InkWell(
+                                                  onTap: () => setState(
+                                                    () {
+                                                      _passwordLoginVisibility =
+                                                          !_passwordLoginVisibility;
+                                                    },
+                                                  ),
+                                                  child: Icon(
+                                                    _passwordLoginVisibility
+                                                        ? Icons
+                                                            .visibility_outlined
+                                                        : Icons
+                                                            .visibility_off_outlined,
+                                                    color:
+                                                        CustomTheme.of(context)
+                                                            .secondaryText,
+                                                    size: 20,
+                                                  ),
+                                                ),
+                                              ),
+                                              style: CustomTheme.of(context)
+                                                  .bodyMedium,
+                                              validator: null,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0, 12, 0, 0),
+                                            child: TextFormField(
+                                              controller:
+                                                  _passwordConfirmController,
+                                              obscureText: true,
+                                              decoration: InputDecoration(
+                                                labelText: '비밀번호확인',
+                                                labelStyle:
+                                                    CustomTheme.of(context)
+                                                        .bodySmall,
+                                                hintText: '입력필수... ',
+                                                hintStyle:
+                                                    CustomTheme.of(context)
+                                                        .bodySmall,
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                    color: Color(0x00000000),
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                    color: Color(0x00000000),
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                errorBorder: OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                    color: Color(0x00000000),
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                focusedErrorBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                    color: Color(0x00000000),
+                                                    width: 1,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                ),
+                                                filled: true,
+                                                fillColor:
+                                                    CustomTheme.of(context)
+                                                        .primaryBackground,
+                                                contentPadding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                        20, 24, 20, 24),
+                                                suffixIcon: InkWell(
+                                                  onTap: () => setState(
+                                                    () {
+                                                      _passwordLoginVisibility =
+                                                          !_passwordLoginVisibility;
+                                                    },
+                                                  ),
+                                                  child: Icon(
+                                                    _passwordLoginVisibility
+                                                        ? Icons
+                                                            .visibility_outlined
+                                                        : Icons
+                                                            .visibility_off_outlined,
+                                                    color:
+                                                        CustomTheme.of(context)
+                                                            .secondaryText,
+                                                    size: 20,
+                                                  ),
+                                                ),
+                                              ),
+                                              style: CustomTheme.of(context)
+                                                  .bodyMedium,
+                                              validator: null,
+                                            ),
+                                          ),
+                                          Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                      0.0, 24.0, 0.0, 24.0),
+                                              child: ElevatedButton(
+                                                onPressed: () async {
+                                                  // GoRouter.of(context)
+                                                  //       .prepareAuthEvent();
+
+                                                  //   final user = await authManager
+                                                  //       .createAccountWithEmail(
+                                                  //     context,
+                                                  //     _emailAddressController.text,
+                                                  //     _passwordCreateController.text,
+                                                  //   );
+                                                  //   if (user == null) {
+                                                  //     return;
+                                                  //   }
+
+                                                  //   context.pushNamedAuth(
+                                                  //       'completeProfile',
+                                                  //       context.mounted);
+                                                },
+                                                style: ElevatedButton.styleFrom(
+                                                    foregroundColor:
+                                                        Colors.white,
+                                                    backgroundColor:
+                                                        CustomTheme.of(context)
+                                                            .primary,
+                                                    elevation: 3.0,
+                                                    side: const BorderSide(
+                                                        color:
+                                                            Colors.transparent,
+                                                        width: 1.0),
+                                                    minimumSize:
+                                                        const Size(230, 50),
+                                                    textStyle: TextStyle(
+                                                        fontSize: 18,
+                                                        color: CustomTheme.of(
+                                                                context)
+                                                            .textColor),
+                                                    shape: RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius.circular(
+                                                                40))),
+                                                child: const Text('계정만들기'),
+                                              )),
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0.0, 10.0, 0.0, 24.0),
+                                            child: ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                    foregroundColor:
+                                                        CustomTheme.of(context)
+                                                            .primaryText,
+                                                    backgroundColor:
+                                                        CustomTheme.of(context)
+                                                            .primaryBackground,
+                                                    elevation: 3.0,
+                                                    minimumSize: const Size(
+                                                        230, 50),
+                                                    textStyle: const TextStyle(
+                                                        fontSize: 18),
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        40))),
+                                                onPressed: () async {
+                                                  //  GoRouter.of(context)
+                                                  //     .prepareAuthEvent();
+                                                  // final user =
+                                                  //     await authManager
+                                                  //         .signInAnonymously(
+                                                  //             context);
+                                                  // if (user == null) {
+                                                  //   return;
+                                                  // }
+
+                                                  // context.pushNamedAuth(
+                                                  //     'homePage',
+                                                  //     context.mounted);      context.mounted);
+                                                },
+                                                child: const Text('임시 계정')),
+                                          ),
+                                        ])),
                                   )
                                 ],
                               )),

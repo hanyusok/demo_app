@@ -1,6 +1,7 @@
 // import 'package:demo_app/screens/home_page.dart';
+import 'package:demo_app/firebase_options.dart';
 import 'package:demo_app/screens/logins/login_page.dart';
-import 'package:demo_app/screens/logins/sign_up_page.dart';
+// import 'package:demo_app/screens/logins/sign_up_page.dart';
 import 'package:demo_app/screens/page_four.dart';
 import 'package:demo_app/screens/page_one.dart';
 import 'package:demo_app/screens/page_three.dart';
@@ -10,11 +11,19 @@ import 'package:demo_app/screens/subthree_page.dart';
 import 'package:demo_app/screens/subtwo_page.dart';
 import 'package:demo_app/screens/user_detail_page.dart';
 import 'package:demo_app/screens/users_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 // import 'package:demo_app/themes/custom_theme.dart';
 
-void main() {
+late final FirebaseApp app;
+late final FirebaseAuth auth;
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  app = await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform);
+  auth = FirebaseAuth.instanceFor(app: app);
   runApp(const MyApp());
 }
 
@@ -24,10 +33,10 @@ final _router = GoRouter(initialLocation: '/', routes: <RouteBase>[
       path: '/login',
       name: 'login',
       builder: (context, state) => const LoginPage()),
-  GoRoute(
-      path: '/signup',
-      name: 'signup',
-      builder: (context, state) => const SignUpPage()),
+  // GoRoute(
+  //     path: '/signup',
+  //     name: 'signup',
+  //     builder: (context, state) => const SignUpPage()),
   GoRoute(
       path: '/userspage',
       name: 'userspage',
