@@ -1,6 +1,9 @@
 // import 'dart:js_util';
 
+import 'dart:developer';
+
 import 'package:demo_app/themes/custom_theme.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -18,7 +21,7 @@ class _LoginPageState extends State<LoginPage>
   final TextEditingController _passwordConfirmController =
       TextEditingController();
   late TabController _tabController;
-  late bool _passwordLoginVisibility = true;
+  late bool _passwordLoginVisibility;
   // int get tabBarCurrentIndex =>
   //     _tabController != null ? _tabController.index : 0;
 
@@ -27,6 +30,7 @@ class _LoginPageState extends State<LoginPage>
     super.initState();
     _tabController = TabController(vsync: this, length: 2, initialIndex: 0)
       ..addListener(() => setState(() {}));
+    _passwordLoginVisibility = true;
   }
 
   @override
@@ -53,7 +57,7 @@ class _LoginPageState extends State<LoginPage>
                     fit: BoxFit.fitWidth,
                     image:
                         Image.asset('assets/images/page_bg_transparent@2x.png')
-                            .image, /* 나중에 이미지 바꿔라!! */
+                            .image, /* --- 나중에 대문 이미지 바꿔라!! ----- */
                   )),
                   child: Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(
@@ -197,7 +201,8 @@ class _LoginPageState extends State<LoginPage>
                                                 .fromSTEB(0, 12, 0, 0),
                                             child: TextFormField(
                                               controller: _passwordController,
-                                              obscureText: true,
+                                              obscureText:
+                                                  _passwordLoginVisibility,
                                               decoration: InputDecoration(
                                                 labelText: '비밀번호',
                                                 labelStyle:
@@ -260,9 +265,9 @@ class _LoginPageState extends State<LoginPage>
                                                   child: Icon(
                                                     _passwordLoginVisibility
                                                         ? Icons
-                                                            .visibility_outlined
+                                                            .visibility_off_outlined
                                                         : Icons
-                                                            .visibility_off_outlined,
+                                                            .visibility_outlined,
                                                     color:
                                                         CustomTheme.of(context)
                                                             .secondaryText,
@@ -396,95 +401,8 @@ class _LoginPageState extends State<LoginPage>
                                                 child: const Text('임시 계정')),
                                           ),
                                         ])),
-                                    /* button start here */
-                                    // Form(
-                                    //     key: formKey,
-                                    //     child: Column(
-                                    //       children: [
-                                    //         const SizedBox(
-                                    //           height: 90,
-                                    //         ),
-                                    //         const Text("Login"),
-                                    //         const SizedBox(
-                                    //           height: 10,
-                                    //         ),
-                                    //         SizedBox(
-                                    //           width: MediaQuery.of(context).size.width * 0.9,
-                                    //           child: TextFormField(
-                                    //             validator: (value) =>
-                                    //                 value!.isEmpty ? "Email cannot be empty" : null,
-                                    //             controller: _emailController,
-                                    //             decoration: const InputDecoration(
-                                    //                 border: OutlineInputBorder(), label: Text("Email")),
-                                    //           ),
-                                    //         ),
-                                    //         const SizedBox(
-                                    //           height: 10,
-                                    //         ),
-                                    //         SizedBox(
-                                    //           width: MediaQuery.of(context).size.width * 0.9,
-                                    //           child: TextFormField(
-                                    //             validator: (value) => value!.length < 8
-                                    //     //            ? "Passowrd should have at least 8 characters."
-                                    //                 : null,
-                                    //             controller: _passwordController,
-                                    //             obscureText: true,
-                                    //             decoration: const InputDecoration(
-                                    //                 border: OutlineInputBorder(),
-                                    //                 label: Text("Password")),
-                                    //           ),
-                                    //         ),
-                                    //         const SizedBox(
-                                    //           height: 10,
-                                    //         ),
-                                    //         SizedBox(
-                                    //           height: 65,
-                                    //           width: MediaQuery.of(context).size.width * 0.9,
-                                    //           child: ElevatedButton(
-                                    //               onPressed: () {
-                                    //                 // method
-                                    //               },
-                                    //               child: const Text("Login")),
-                                    //         ),
-                                    //         SizedBox(
-                                    //           height: 65,
-                                    //           width: MediaQuery.of(context).size.width * 0.9,
-                                    //           child: OutlinedButton(
-                                    //               onPressed: () {},
-                                    //               child: const Row(
-                                    //                 mainAxisAlignment: MainAxisAlignment.center,
-                                    //                 children: [
-                                    //                   SizedBox(
-                                    //                     width: 10,
-                                    //                   ),
-                                    //                   Text(
-                                    //                     "Continue with Google",
-                                    //                   )
-                                    //                 ],
-                                    //               )),
-                                    //         ),
-                                    //         const SizedBox(
-                                    //           height: 10,
-                                    //         ),
-                                    //         Row(
-                                    //           mainAxisAlignment: MainAxisAlignment.center,
-                                    //           children: [
-                                    //             const Text("Don't have an account?"),
-                                    //             TextButton(
-                                    //                 onPressed: () {
-                                    //                   Navigator.pushNamed(context, "/signup");
-                                    //                 },
-                                    //                 child: const Text("Sign Up"))
-                                    //           ],
-                                    //         ),
-                                    //         const SizedBox(
-                                    //           height: 10,
-                                    //         ),
-                                    //       ],
-                                    //     )),
                                   ),
-
-                                  /* ----------- sign up view ------------*/
+                                  /* ----------------- SIGN UP  ------------------------------*/
                                   Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
@@ -555,7 +473,7 @@ class _LoginPageState extends State<LoginPage>
                                               style: CustomTheme.of(context)
                                                   .bodyMedium,
                                               validator:
-                                                  null, /* email validator 추가하자*/
+                                                  null, /* ---- email validator 추가하자 -----*/
                                             ),
                                           ),
                                           Padding(
@@ -563,7 +481,8 @@ class _LoginPageState extends State<LoginPage>
                                                 .fromSTEB(0, 12, 0, 0),
                                             child: TextFormField(
                                               controller: _passwordController,
-                                              obscureText: true,
+                                              obscureText:
+                                                  _passwordLoginVisibility,
                                               decoration: InputDecoration(
                                                 labelText: '비밀번호',
                                                 labelStyle:
@@ -626,9 +545,9 @@ class _LoginPageState extends State<LoginPage>
                                                   child: Icon(
                                                     _passwordLoginVisibility
                                                         ? Icons
-                                                            .visibility_outlined
+                                                            .visibility_off_outlined
                                                         : Icons
-                                                            .visibility_off_outlined,
+                                                            .visibility_outlined,
                                                     color:
                                                         CustomTheme.of(context)
                                                             .secondaryText,
@@ -647,7 +566,8 @@ class _LoginPageState extends State<LoginPage>
                                             child: TextFormField(
                                               controller:
                                                   _passwordConfirmController,
-                                              obscureText: true,
+                                              obscureText:
+                                                  _passwordLoginVisibility,
                                               decoration: InputDecoration(
                                                 labelText: '비밀번호확인',
                                                 labelStyle:
@@ -710,9 +630,9 @@ class _LoginPageState extends State<LoginPage>
                                                   child: Icon(
                                                     _passwordLoginVisibility
                                                         ? Icons
-                                                            .visibility_outlined
+                                                            .visibility_off_outlined
                                                         : Icons
-                                                            .visibility_off_outlined,
+                                                            .visibility_outlined,
                                                     color:
                                                         CustomTheme.of(context)
                                                             .secondaryText,
@@ -722,7 +642,8 @@ class _LoginPageState extends State<LoginPage>
                                               ),
                                               style: CustomTheme.of(context)
                                                   .bodyMedium,
-                                              validator: null,
+                                              validator:
+                                                  null, /* ---- password validator 추가하자 -----*/
                                             ),
                                           ),
                                           Padding(
@@ -731,23 +652,36 @@ class _LoginPageState extends State<LoginPage>
                                                       .fromSTEB(
                                                       0.0, 24.0, 0.0, 24.0),
                                               child: ElevatedButton(
-                                                onPressed: () async {
+                                                onPressed: () {
                                                   // GoRouter.of(context)
                                                   //       .prepareAuthEvent();
+                                                  try {
+                                                    FirebaseAuth.instance
+                                                        .createUserWithEmailAndPassword(
+                                                            email:
+                                                                _emailController
+                                                                    .text,
+                                                            password:
+                                                                _passwordConfirmController
+                                                                    .text);
+                                                  } on FirebaseAuthException catch (e) {
+                                                    log(e.message.toString());
+                                                  }
 
-                                                  //   final user = await authManager
-                                                  //       .createAccountWithEmail(
-                                                  //     context,
-                                                  //     _emailAddressController.text,
-                                                  //     _passwordCreateController.text,
-                                                  //   );
-                                                  //   if (user == null) {
-                                                  //     return;
-                                                  //   }
-
-                                                  //   context.pushNamedAuth(
-                                                  //       'completeProfile',
-                                                  //       context.mounted);
+                                                  final user = FirebaseAuth
+                                                      .instance.currentUser;
+                                                  if (user != null) {
+                                                    log('login success');
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                            const SnackBar(
+                                                                content: Text(
+                                                                    "Login Successful")));
+                                                    // Navigator.pushReplacementNamed(context, "/home");
+                                                    Navigator.pushNamed(
+                                                        context, '/homepage');
+                                                  }
                                                 },
                                                 style: ElevatedButton.styleFrom(
                                                     foregroundColor:

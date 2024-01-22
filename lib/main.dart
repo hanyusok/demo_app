@@ -1,7 +1,6 @@
-// import 'package:demo_app/screens/home_page.dart';
+import 'package:demo_app/screens/home_page.dart';
 import 'package:demo_app/firebase_options.dart';
 import 'package:demo_app/screens/logins/login_page.dart';
-// import 'package:demo_app/screens/logins/sign_up_page.dart';
 import 'package:demo_app/screens/page_four.dart';
 import 'package:demo_app/screens/page_one.dart';
 import 'package:demo_app/screens/page_three.dart';
@@ -14,7 +13,7 @@ import 'package:demo_app/screens/users_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+
 // import 'package:demo_app/themes/custom_theme.dart';
 
 late final FirebaseApp app;
@@ -26,54 +25,6 @@ Future<void> main() async {
   auth = FirebaseAuth.instanceFor(app: app);
   runApp(const MyApp());
 }
-
-//go_router 를 통한 router 설정
-final _router = GoRouter(initialLocation: '/', routes: <RouteBase>[
-  GoRoute(
-      path: '/login',
-      name: 'login',
-      builder: (context, state) => const LoginPage()),
-  // GoRoute(
-  //     path: '/signup',
-  //     name: 'signup',
-  //     builder: (context, state) => const SignUpPage()),
-  GoRoute(
-      path: '/userspage',
-      name: 'userspage',
-      builder: (context, state) => const UsersPage()),
-  GoRoute(
-      path: '/userdetail',
-      name: 'userdetail',
-      builder: (context, state) => const UserDetailPage()),
-  GoRoute(
-      path: '/',
-      // name: 'homepage',
-      // builder: (context, state) => const HomePage()),
-      builder: (context, state) => const LoginPage()),
-  GoRoute(
-      path: '/subonepage',
-      name: 'subonepage',
-      builder: (context, state) => const SubonePage()),
-  GoRoute(path: '/subtwopage', builder: (context, state) => const SubtwoPage()),
-  GoRoute(
-      path: '/subthreepage', builder: (context, state) => const SubthreePage()),
-  GoRoute(
-      path: '/pageone',
-      name: 'pageone',
-      builder: (context, state) => const PageOne()),
-  GoRoute(
-      path: '/pagetwo',
-      name: 'pagetwo',
-      builder: (context, state) => const PageTwo()),
-  GoRoute(
-      path: '/pagethree',
-      name: 'pagethree',
-      builder: (context, state) => const PageThree()),
-  GoRoute(
-      path: '/pagefour',
-      name: 'pagefour',
-      builder: (context, state) => const PageFour()),
-]);
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -93,9 +44,21 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      routerConfig: _router,
+      routes: {
+        '/homepage': (context) => const HomePage(),
+        '/': (context) => const LoginPage(),
+        '/userspage': (context) => const UsersPage(),
+        '/userdetailpage': (context) => const UserDetailPage(),
+        '/subonepage': (context) => const SubonePage(),
+        '/subtwopage': (context) => const SubtwoPage(),
+        '/subthreepage': (context) => const SubthreePage(),
+        '/pagefour': (context) => const PageFour(),
+        '/pageOne': (context) => const PageOne(),
+        '/pageThree': (context) => const PageThree(),
+        '/pageTwo': (context) => const PageTwo(),
+      },
       title: 'Flutter Demo',
       theme: ThemeData(
         fontFamily: 'Pretendard',
