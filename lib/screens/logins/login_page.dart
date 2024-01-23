@@ -22,8 +22,6 @@ class _LoginPageState extends State<LoginPage>
       TextEditingController();
   late TabController _tabController;
   late bool _passwordLoginVisibility;
-  // int get tabBarCurrentIndex =>
-  //     _tabController != null ? _tabController.index : 0;
 
   @override
   void initState() {
@@ -676,9 +674,11 @@ class _LoginPageState extends State<LoginPage>
                                                             context)
                                                         .showSnackBar(
                                                             const SnackBar(
-                                                                content: Text(
-                                                                    "Login Successful")));
-                                                    // Navigator.pushReplacementNamed(context, "/home");
+                                                      content:
+                                                          Text("계정이 생성되었습니다."),
+                                                      duration:
+                                                          Duration(seconds: 3),
+                                                    ));
                                                     Navigator.pushNamed(
                                                         context, '/homepage');
                                                   }

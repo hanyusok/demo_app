@@ -1,70 +1,68 @@
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:rxdart/rxdart.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:rxdart/rxdart.dart';
+import 'package:demo_app/controllers/fb_auth/base_auth_user_provider.dart';
+export 'package:demo_app/controllers/fb_auth/base_auth_user_provider.dart';
 
-// import '../base_auth_user_provider.dart';
+class DemoFirebaseUser extends BaseAuthUser {
+  DemoFirebaseUser(this.user);
+  User? user;
+  @override
+  bool get loggedIn => user != null;
 
-// export '../base_auth_user_provider.dart';
+  @override
+  AuthUserInfo get authUserInfo => AuthUserInfo(
+        uid: user?.uid,
+        email: user?.email,
+        displayName: user?.displayName,
+        photoUrl: user?.photoURL,
+        phoneNumber: user?.phoneNumber,
+      );
 
-// class ReservationFirebaseUser extends BaseAuthUser {
-//   ReservationFirebaseUser(this.user);
-//   User? user;
-//   bool get loggedIn => user != null;
+  @override
+  Future? delete() => user?.delete();
 
-//   @override
-//   AuthUserInfo get authUserInfo => AuthUserInfo(
-//         uid: user?.uid,
-//         email: user?.email,
-//         displayName: user?.displayName,
-//         photoUrl: user?.photoURL,
-//         phoneNumber: user?.phoneNumber,
-//       );
+  @override
+  Future? updateEmail(String email) async {
+    try {
+      await user?.updateEmail(email);
+    } catch (_) {
+      await user?.verifyBeforeUpdateEmail(email);
+    }
+  }
 
-//   @override
-//   Future? delete() => user?.delete();
+  @override
+  Future? sendEmailVerification() => user?.sendEmailVerification();
 
-//   @override
-//   Future? updateEmail(String email) async {
-//     try {
-//       await user?.updateEmail(email);
-//     } catch (_) {
-//       await user?.verifyBeforeUpdateEmail(email);
-//     }
-//   }
+  @override
+  bool get emailVerified {
+    // Reloads the user when checking in order to get the most up to date
+    // email verified status.
+    if (loggedIn && !user!.emailVerified) {
+      refreshUser();
+    }
+    return user?.emailVerified ?? false;
+  }
 
-//   @override
-//   Future? sendEmailVerification() => user?.sendEmailVerification();
+  @override
+  Future refreshUser() async {
+    await FirebaseAuth.instance.currentUser
+        ?.reload()
+        .then((_) => user = FirebaseAuth.instance.currentUser);
+  }
 
-//   @override
-//   bool get emailVerified {
-//     // Reloads the user when checking in order to get the most up to date
-//     // email verified status.
-//     if (loggedIn && !user!.emailVerified) {
-//       refreshUser();
-//     }
-//     return user?.emailVerified ?? false;
-//   }
+  static BaseAuthUser fromUserCredential(UserCredential userCredential) =>
+      fromFirebaseUser(userCredential.user);
+  static BaseAuthUser fromFirebaseUser(User? user) => DemoFirebaseUser(user);
+}
 
-//   @override
-//   Future refreshUser() async {
-//     await FirebaseAuth.instance.currentUser
-//         ?.reload()
-//         .then((_) => user = FirebaseAuth.instance.currentUser);
-//   }
-
-//   static BaseAuthUser fromUserCredential(UserCredential userCredential) =>
-//       fromFirebaseUser(userCredential.user);
-//   static BaseAuthUser fromFirebaseUser(User? user) =>
-//       ReservationFirebaseUser(user);
-// }
-
-// Stream<BaseAuthUser> reservationFirebaseUserStream() => FirebaseAuth.instance
-//         .authStateChanges()
-//         .debounce((user) => user == null && !loggedIn
-//             ? TimerStream(true, const Duration(seconds: 1))
-//             : Stream.value(user))
-//         .map<BaseAuthUser>(
-//       (user) {
-//         currentUser = ReservationFirebaseUser(user);
-//         return currentUser!;
-//       },
-//     );
+Stream<BaseAuthUser> demoFirebaseUserStream() => FirebaseAuth.instance
+        .authStateChanges()
+        .debounce((user) => user == null && !loggedIn
+            ? TimerStream(true, const Duration(seconds: 1))
+            : Stream.value(user))
+        .map<BaseAuthUser>(
+      (user) {
+        currentUser = DemoFirebaseUser(user);
+        return currentUser!;
+      },
+    );

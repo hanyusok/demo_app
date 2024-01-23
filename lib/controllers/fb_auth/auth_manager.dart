@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'base_auth_user_provider.dart';
 
 abstract class AuthManager {
