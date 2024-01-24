@@ -1,7 +1,8 @@
 // import 'dart:js_util';
 
 import 'dart:developer';
-
+// import 'package:email_validator/email_validator.dart';
+// import 'package:demo_app/auth/auth_manager.dart';
 import 'package:demo_app/themes/custom_theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,8 @@ class _LoginPageState extends State<LoginPage>
       TextEditingController();
   late TabController _tabController;
   late bool _passwordLoginVisibility;
+  final _auth = FirebaseAuth.instance;
+  // late EmailSignInManager _emailSignInManager;
 
   @override
   void initState() {
@@ -35,6 +38,9 @@ class _LoginPageState extends State<LoginPage>
   void dispose() {
     super.dispose();
     _tabController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _passwordConfirmController.dispose();
   }
 
   @override
@@ -190,8 +196,15 @@ class _LoginPageState extends State<LoginPage>
                                               ),
                                               style: CustomTheme.of(context)
                                                   .bodyMedium,
-                                              validator:
-                                                  null, /* email validator 추가하자*/
+                                              validator: (value) {
+                                                if (value == null ||
+                                                    value.isEmpty ||
+                                                    !value.contains('@') ||
+                                                    !value.contains('.')) {
+                                                  return 'Invalid Email';
+                                                }
+                                                return null;
+                                              }, /* -- email validator 작동 잘하는지??? -- */ /* email validator 추가하자*/
                                             ),
                                           ),
                                           Padding(
@@ -284,26 +297,31 @@ class _LoginPageState extends State<LoginPage>
                                                       .fromSTEB(
                                                       0.0, 24.0, 0.0, 24.0),
                                               child: ElevatedButton(
-                                                onPressed: () async {
+                                                onPressed: () {
                                                   // GoRouter.of(context)
                                                   //       .prepareAuthEvent();
+                                                  try {
+                                                    if (_emailController
+                                                            .text.isNotEmpty &&
+                                                        _passwordController
+                                                                .text.length >
+                                                            6) {
+                                                      _auth.signInWithEmailAndPassword(
+                                                          email:
+                                                              _emailController
+                                                                  .text,
+                                                          password:
+                                                              _passwordController
+                                                                  .text);
+                                                    } else {
+                                                      log(' email is empty or password is invalid');
+                                                    }
+                                                  } on FirebaseAuthException catch (e) {
+                                                    log(e.message.toString());
+                                                  }
 
-                                                  //   final user = await authManager
-                                                  //       .createAccountWithEmail(
-                                                  //     context,
-                                                  //     _model.emailAddressController
-                                                  //         .text,
-                                                  //     _model
-                                                  //         .passwordCreateController
-                                                  //         .text,
-                                                  //   );
-                                                  //   if (user == null) {
-                                                  //     return;
-                                                  //   }
-
-                                                  //   context.pushNamedAuth(
-                                                  //       'completeProfile',
-                                                  //       context.mounted);
+                                                  Navigator.pushNamed(
+                                                      context, '/homepage');
                                                 },
                                                 style: ElevatedButton.styleFrom(
                                                     foregroundColor:
@@ -470,8 +488,15 @@ class _LoginPageState extends State<LoginPage>
                                               ),
                                               style: CustomTheme.of(context)
                                                   .bodyMedium,
-                                              validator:
-                                                  null, /* ---- email validator 추가하자 -----*/
+                                              validator: (value) {
+                                                if (value == null ||
+                                                    value.isEmpty ||
+                                                    !value.contains('@') ||
+                                                    !value.contains('.')) {
+                                                  return 'Invalid Email';
+                                                }
+                                                return null;
+                                              }, /* ---- email validator 추가하자 -----*/
                                             ),
                                           ),
                                           Padding(
@@ -654,14 +679,12 @@ class _LoginPageState extends State<LoginPage>
                                                   // GoRouter.of(context)
                                                   //       .prepareAuthEvent();
                                                   try {
-                                                    FirebaseAuth.instance
-                                                        .createUserWithEmailAndPassword(
-                                                            email:
-                                                                _emailController
-                                                                    .text,
-                                                            password:
-                                                                _passwordConfirmController
-                                                                    .text);
+                                                    _auth.createUserWithEmailAndPassword(
+                                                        email: _emailController
+                                                            .text,
+                                                        password:
+                                                            _passwordController
+                                                                .text);
                                                   } on FirebaseAuthException catch (e) {
                                                     log(e.message.toString());
                                                   }

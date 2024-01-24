@@ -13,16 +13,19 @@ import 'package:demo_app/screens/users_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:async';
 
 // import 'package:demo_app/themes/custom_theme.dart';
 
-late final FirebaseApp app;
-late final FirebaseAuth auth;
+// late final FirebaseApp app;
+// late final FirebaseAuth auth;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  app = await Firebase.initializeApp(
+  await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform);
-  auth = FirebaseAuth.instanceFor(app: app);
+  
   runApp(const MyApp());
 }
 
@@ -44,8 +47,21 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    final User? user;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      home: StreamBuilder<User?> {
+        Stream: FirebaseAuth.instance.authStateChanges(),
+        Builder: (context, AsyncSnapshot<User?> snapshot){
+          if(snapshot.hasData && snapshot.data!=null){
+            return const HomePage();
+          } 
+          else if(snapshot.connectionState == ConnectionState.waiting){
+            return const Center(
+              child: CircularProgressIndicator());           
+          }
+        return const LoginPage();
+      }},
       routes: {
         '/homepage': (context) => const HomePage(),
         '/': (context) => const LoginPage(),
@@ -65,7 +81,9 @@ class _MyAppState extends State<MyApp> {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.system,      
+
     );
   }
 }
+

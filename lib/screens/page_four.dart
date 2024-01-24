@@ -1,5 +1,6 @@
 /* page_four => "settings_page.dart" '개인설정, 가족추가'  */
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class PageFour extends StatefulWidget {
@@ -10,6 +11,9 @@ class PageFour extends StatefulWidget {
 }
 
 class _PageFourState extends State<PageFour> {
+  Future<void> signout() async {
+
+  }
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
@@ -30,6 +34,12 @@ class _PageFourState extends State<PageFour> {
               ),
               // Expanded(child: ),
               Text('개인, 가족 추가, 약국, 처방전 설정,'),
+              ElevatedButton(
+                  onPressed: () { FirebaseAuth.instance.signOut()} ,
+                  child: Text(
+                    'Log out',
+                    style: TextStyle(),
+                  ))
             ],
           )),
     );
