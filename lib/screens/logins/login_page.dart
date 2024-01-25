@@ -23,7 +23,8 @@ class _LoginPageState extends State<LoginPage>
       TextEditingController();
   late TabController _tabController;
   late bool _passwordLoginVisibility;
-  final _auth = FirebaseAuth.instance;
+  late User? user = FirebaseAuth.instance.currentUser;
+
   // late EmailSignInManager _emailSignInManager;
 
   @override
@@ -38,9 +39,9 @@ class _LoginPageState extends State<LoginPage>
   void dispose() {
     super.dispose();
     _tabController.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-    _passwordConfirmController.dispose();
+    // _emailController.dispose();
+    // _passwordController.dispose();
+    // _passwordConfirmController.dispose();
   }
 
   @override
@@ -306,15 +307,17 @@ class _LoginPageState extends State<LoginPage>
                                                         _passwordController
                                                                 .text.length >
                                                             6) {
-                                                      _auth.signInWithEmailAndPassword(
-                                                          email:
-                                                              _emailController
-                                                                  .text,
-                                                          password:
-                                                              _passwordController
-                                                                  .text);
+                                                      FirebaseAuth.instance
+                                                          .signInWithEmailAndPassword(
+                                                              email:
+                                                                  _emailController
+                                                                      .text,
+                                                              password:
+                                                                  _passwordController
+                                                                      .text);
                                                     } else {
                                                       log(' email is empty or password is invalid');
+                                                      return;
                                                     }
                                                   } on FirebaseAuthException catch (e) {
                                                     log(e.message.toString());
@@ -679,18 +682,20 @@ class _LoginPageState extends State<LoginPage>
                                                   // GoRouter.of(context)
                                                   //       .prepareAuthEvent();
                                                   try {
-                                                    _auth.createUserWithEmailAndPassword(
-                                                        email: _emailController
-                                                            .text,
-                                                        password:
-                                                            _passwordController
-                                                                .text);
+                                                    FirebaseAuth.instance
+                                                        .createUserWithEmailAndPassword(
+                                                            email:
+                                                                _emailController
+                                                                    .text,
+                                                            password:
+                                                                _passwordController
+                                                                    .text);
                                                   } on FirebaseAuthException catch (e) {
                                                     log(e.message.toString());
                                                   }
 
-                                                  final user = FirebaseAuth
-                                                      .instance.currentUser;
+                                                  // final user = FirebaseAuth
+                                                  //     .instance.currentUser;
                                                   if (user != null) {
                                                     log('login success');
                                                     ScaffoldMessenger.of(

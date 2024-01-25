@@ -50,6 +50,9 @@ class _PageFourState extends State<PageFour> {
 
 Future<void> signout() async {
   await FirebaseAuth.instance.signOut();
-  late String? user = FirebaseAuth.instance.currentUser?.toString();
+  User? user = FirebaseAuth.instance.currentUser;
+
+  // late String? user = FirebaseAuth.instance.authStateChanges();
+  // currentUser?.email.toString();
   log('$user : log out!');
 }
