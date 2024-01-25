@@ -13,7 +13,7 @@ import 'package:demo_app/screens/users_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
 
@@ -47,12 +47,12 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    final User? user;
+    
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: StreamBuilder<User?> {
+      home: StreamBuilder {
         Stream: FirebaseAuth.instance.authStateChanges(),
-        Builder: (context, AsyncSnapshot<User?> snapshot){
+        Builder: (context, snapshot){
           if(snapshot.hasData && snapshot.data!=null){
             return const HomePage();
           } 
@@ -87,3 +87,7 @@ class _MyAppState extends State<MyApp> {
   }
 }
 
+  Future<bool> isLoggedIn() async {
+    final user = FirebaseAuth.instance.currentUser;
+    return user != null;
+  }

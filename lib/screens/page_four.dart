@@ -11,9 +11,6 @@ class PageFour extends StatefulWidget {
 }
 
 class _PageFourState extends State<PageFour> {
-  Future<void> signout() async {
-
-  }
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
@@ -35,13 +32,18 @@ class _PageFourState extends State<PageFour> {
               // Expanded(child: ),
               Text('개인, 가족 추가, 약국, 처방전 설정,'),
               ElevatedButton(
-                  onPressed: () { FirebaseAuth.instance.signOut()} ,
-                  child: Text(
-                    'Log out',
-                    style: TextStyle(),
-                  ))
+                onPressed: signout,
+                child: Text(
+                  'Log out',
+                  style: TextStyle(),
+                ),
+              )
             ],
           )),
     );
   }
+}
+
+Future<void> signout() async {
+  await FirebaseAuth.instance.signOut();
 }
