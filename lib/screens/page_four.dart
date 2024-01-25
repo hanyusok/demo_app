@@ -1,5 +1,9 @@
 /* page_four => "settings_page.dart" '개인설정, 가족추가'  */
 
+// import 'dart:js_util';
+
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -46,4 +50,6 @@ class _PageFourState extends State<PageFour> {
 
 Future<void> signout() async {
   await FirebaseAuth.instance.signOut();
+  late String? user = FirebaseAuth.instance.currentUser?.toString();
+  log('$user : log out!');
 }

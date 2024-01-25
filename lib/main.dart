@@ -23,9 +23,8 @@ import 'dart:async';
 // late final FirebaseAuth auth;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform);
-  
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   runApp(const MyApp());
 }
 
@@ -45,26 +44,27 @@ class _MyAppState extends State<MyApp> {
     super.initState();
   }
 
+  Widget _getLandingPage() {
+    return StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
+          if (snapshot.hasData && snapshot.data != null) {
+            return const HomePage();
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          return const LoginPage();
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
-    
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: StreamBuilder {
-        Stream: FirebaseAuth.instance.authStateChanges(),
-        Builder: (context, snapshot){
-          if(snapshot.hasData && snapshot.data!=null){
-            return const HomePage();
-          } 
-          else if(snapshot.connectionState == ConnectionState.waiting){
-            return const Center(
-              child: CircularProgressIndicator());           
-          }
-        return const LoginPage();
-      }},
+      home: _getLandingPage(),
       routes: {
         '/homepage': (context) => const HomePage(),
-        '/': (context) => const LoginPage(),
+        // '/': (context) => const LoginPage(),
         '/userspage': (context) => const UsersPage(),
         '/userdetailpage': (context) => const UserDetailPage(),
         '/subonepage': (context) => const SubonePage(),
@@ -81,13 +81,7 @@ class _MyAppState extends State<MyApp> {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      themeMode: ThemeMode.system,      
-
+      themeMode: ThemeMode.system,
     );
   }
 }
-
-  Future<bool> isLoggedIn() async {
-    final user = FirebaseAuth.instance.currentUser;
-    return user != null;
-  }
