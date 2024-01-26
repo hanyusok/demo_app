@@ -1,11 +1,12 @@
 // import 'dart:js_util';
 
-import 'dart:developer';
+// import 'dart:developer';
 // import 'package:email_validator/email_validator.dart';
 // import 'package:demo_app/auth/auth_manager.dart';
 import 'package:demo_app/themes/custom_theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:demo_app/services/fb_auth_service.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -19,13 +20,9 @@ class _LoginPageState extends State<LoginPage>
   final formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _passwordConfirmController =
-      TextEditingController();
   late TabController _tabController;
   late bool _passwordLoginVisibility;
-  late User? user = FirebaseAuth.instance.currentUser;
-
-  // late EmailSignInManager _emailSignInManager;
+  // final User? user = FirebaseAuth.instance.currentUser;
 
   @override
   void initState() {
@@ -39,9 +36,22 @@ class _LoginPageState extends State<LoginPage>
   void dispose() {
     super.dispose();
     _tabController.dispose();
-    // _emailController.dispose();
-    // _passwordController.dispose();
-    // _passwordConfirmController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+  }
+
+  void singUpUser() async {
+    FbAuthService(FirebaseAuth.instance).signUpWithEmail(
+        email: _emailController.text,
+        password: _passwordController.text,
+        context: context);
+  }
+
+  void loginUser() async {
+    FbAuthService(FirebaseAuth.instance).loginWithEmail(
+        email: _emailController.text,
+        password: _passwordController.text,
+        context: context);
   }
 
   @override
@@ -298,34 +308,7 @@ class _LoginPageState extends State<LoginPage>
                                                       .fromSTEB(
                                                       0.0, 24.0, 0.0, 24.0),
                                               child: ElevatedButton(
-                                                onPressed: () {
-                                                  // GoRouter.of(context)
-                                                  //       .prepareAuthEvent();
-                                                  try {
-                                                    if (_emailController
-                                                            .text.isNotEmpty &&
-                                                        _passwordController
-                                                                .text.length >
-                                                            6) {
-                                                      FirebaseAuth.instance
-                                                          .signInWithEmailAndPassword(
-                                                              email:
-                                                                  _emailController
-                                                                      .text,
-                                                              password:
-                                                                  _passwordController
-                                                                      .text);
-                                                    } else {
-                                                      log(' email is empty or password is invalid');
-                                                      return;
-                                                    }
-                                                  } on FirebaseAuthException catch (e) {
-                                                    log(e.message.toString());
-                                                  }
-
-                                                  Navigator.pushNamed(
-                                                      context, '/homepage');
-                                                },
+                                                onPressed: loginUser,
                                                 style: ElevatedButton.styleFrom(
                                                     foregroundColor:
                                                         Colors.white,
@@ -372,13 +355,10 @@ class _LoginPageState extends State<LoginPage>
                                                         fontSize: 18),
                                                     shape: RoundedRectangleBorder(
                                                         borderRadius:
-                                                            BorderRadius
-                                                                .circular(40))),
-                                                onPressed: () async {
-                                                  // context.pushNamed('forgotPassword');
-                                                },
-                                                child:
-                                                    const Text('비밀번호 잃으셨나요?')),
+                                                            BorderRadius.circular(
+                                                                40))),
+                                                onPressed: () {},
+                                                child: const Text('비밀번호 잃으셨나요?')),
                                           ),
                                           Padding(
                                             padding: const EdgeInsetsDirectional
@@ -392,31 +372,15 @@ class _LoginPageState extends State<LoginPage>
                                                         CustomTheme.of(context)
                                                             .primaryBackground,
                                                     elevation: 3.0,
-                                                    minimumSize: const Size(
-                                                        230, 50),
+                                                    minimumSize:
+                                                        const Size(230, 50),
                                                     textStyle: const TextStyle(
                                                         fontSize: 18),
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        40))),
-                                                onPressed: () async {
-                                                  //  GoRouter.of(context)
-                                                  //     .prepareAuthEvent();
-                                                  // final user =
-                                                  //     await authManager
-                                                  //         .signInAnonymously(
-                                                  //             context);
-                                                  // if (user == null) {
-                                                  //   return;
-                                                  // }
-
-                                                  // context.pushNamedAuth(
-                                                  //     'homePage',
-                                                  //     context.mounted);      context.mounted);
-                                                },
+                                                    shape: RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(40))),
+                                                onPressed: () {},
                                                 child: const Text('임시 계정')),
                                           ),
                                         ])),
@@ -587,130 +551,12 @@ class _LoginPageState extends State<LoginPage>
                                             ),
                                           ),
                                           Padding(
-                                            padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0, 12, 0, 0),
-                                            child: TextFormField(
-                                              controller:
-                                                  _passwordConfirmController,
-                                              obscureText:
-                                                  _passwordLoginVisibility,
-                                              decoration: InputDecoration(
-                                                labelText: '비밀번호확인',
-                                                labelStyle:
-                                                    CustomTheme.of(context)
-                                                        .bodySmall,
-                                                hintText: '입력필수... ',
-                                                hintStyle:
-                                                    CustomTheme.of(context)
-                                                        .bodySmall,
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Color(0x00000000),
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Color(0x00000000),
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                ),
-                                                errorBorder: OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Color(0x00000000),
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                ),
-                                                focusedErrorBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Color(0x00000000),
-                                                    width: 1,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(8),
-                                                ),
-                                                filled: true,
-                                                fillColor:
-                                                    CustomTheme.of(context)
-                                                        .primaryBackground,
-                                                contentPadding:
-                                                    const EdgeInsetsDirectional
-                                                        .fromSTEB(
-                                                        20, 24, 20, 24),
-                                                suffixIcon: InkWell(
-                                                  onTap: () => setState(
-                                                    () {
-                                                      _passwordLoginVisibility =
-                                                          !_passwordLoginVisibility;
-                                                    },
-                                                  ),
-                                                  child: Icon(
-                                                    _passwordLoginVisibility
-                                                        ? Icons
-                                                            .visibility_off_outlined
-                                                        : Icons
-                                                            .visibility_outlined,
-                                                    color:
-                                                        CustomTheme.of(context)
-                                                            .secondaryText,
-                                                    size: 20,
-                                                  ),
-                                                ),
-                                              ),
-                                              style: CustomTheme.of(context)
-                                                  .bodyMedium,
-                                              validator:
-                                                  null, /* ---- password validator 추가하자 -----*/
-                                            ),
-                                          ),
-                                          Padding(
                                               padding:
                                                   const EdgeInsetsDirectional
                                                       .fromSTEB(
                                                       0.0, 24.0, 0.0, 24.0),
                                               child: ElevatedButton(
-                                                onPressed: () {
-                                                  // GoRouter.of(context)
-                                                  //       .prepareAuthEvent();
-                                                  try {
-                                                    FirebaseAuth.instance
-                                                        .createUserWithEmailAndPassword(
-                                                            email:
-                                                                _emailController
-                                                                    .text,
-                                                            password:
-                                                                _passwordController
-                                                                    .text);
-                                                  } on FirebaseAuthException catch (e) {
-                                                    log(e.message.toString());
-                                                  }
-
-                                                  // final user = FirebaseAuth
-                                                  //     .instance.currentUser;
-                                                  if (user != null) {
-                                                    log('login success');
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .showSnackBar(
-                                                            const SnackBar(
-                                                      content:
-                                                          Text("계정이 생성되었습니다."),
-                                                      duration:
-                                                          Duration(seconds: 3),
-                                                    ));
-                                                    Navigator.pushNamed(
-                                                        context, '/homepage');
-                                                  }
-                                                },
+                                                onPressed: singUpUser,
                                                 style: ElevatedButton.styleFrom(
                                                     foregroundColor:
                                                         Colors.white,
@@ -747,31 +593,15 @@ class _LoginPageState extends State<LoginPage>
                                                         CustomTheme.of(context)
                                                             .primaryBackground,
                                                     elevation: 3.0,
-                                                    minimumSize: const Size(
-                                                        230, 50),
+                                                    minimumSize:
+                                                        const Size(230, 50),
                                                     textStyle: const TextStyle(
                                                         fontSize: 18),
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        40))),
-                                                onPressed: () async {
-                                                  //  GoRouter.of(context)
-                                                  //     .prepareAuthEvent();
-                                                  // final user =
-                                                  //     await authManager
-                                                  //         .signInAnonymously(
-                                                  //             context);
-                                                  // if (user == null) {
-                                                  //   return;
-                                                  // }
-
-                                                  // context.pushNamedAuth(
-                                                  //     'homePage',
-                                                  //     context.mounted);      context.mounted);
-                                                },
+                                                    shape: RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(40))),
+                                                onPressed: () {},
                                                 child: const Text('임시 계정')),
                                           ),
                                         ])),
