@@ -1,5 +1,8 @@
 // import 'dart:developer';
 
+// import 'dart:html';
+
+// import 'package:demo_app/services/show_otp_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -43,50 +46,38 @@ class FbAuthService {
   }
 
 //PHONE SIGN IN
-  Future<void> phoneSignIn(BuildContext context, String phoneNumber) async {
-    //For Android or Ios
-    await _auth.verifyPhoneNumber(
-      phoneNumber: phoneNumber,
-      verificationCompleted: (PhoneAuthCredential credential) async {
-        await _auth.signInWithCredential(credential);
-      },
-      verificationFailed: (e) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('e.message!'),
-          duration: Duration(seconds: 3),
-        ));
-      },
-      codeSent: ((String verificationId, int? resendToken) async {
-        showOTPDialog();
-      }),
-      codeAutoRetrievalTimeout: '',
-    );
-  }
-
-  //OTP dialog
-  void showOTPDialog({
-    required BuildContext context,
-    required TextEditingController codeController,
-    required VoidCallback onPressed,
-  }) {
-    showDialog(
-        context: context,
-        barrierDismissible: true,
-        builder: (context) => const AlertDialog(
-              title: Text('Enter OTP'),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  TextField(
-                    controller: codeController,
-                  )
-                ],
-              ),
-              actions: <Widget>[
-                TextButton(onPressed: () {}, child: const Text('Done'))
-              ],
-            ));
-  }
+  // Future<void> phoneSignIn(BuildContext context, String phoneNumber) async {
+  //   //For Android or Ios
+  //   TextEditingController codeController = TextEditingController();
+  //   await _auth.verifyPhoneNumber(
+  //     phoneNumber: phoneNumber,
+  //     verificationCompleted: (PhoneAuthCredential credential) async {
+  //       await _auth.signInWithCredential(credential);
+  //     },
+  //     verificationFailed: (e) {
+  //       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+  //         content: Text('e.message!'),
+  //         duration: Duration(seconds: 3),
+  //       ));
+  //     },
+  //     codeSent: ((String verificationId, int? resendToken) async {
+  //       showOTPDialog(
+  //           codeController: codeController,
+  //           context: context,
+  //           onPressed: () async {
+  //             PhoneAuthCredential credential = PhoneAuthProvider.credential(
+  //                 verificationId: verificationId,
+  //                 smsCode: codeController.text.trim());
+  //             await _auth.signInWithCredential(credential);
+  //             if (!context.mounted) return;
+  //             Navigator.of(context).pop();
+  //           });
+  //     }),
+  //     codeAutoRetrievalTimeout: (String verificationId) {
+  //       // Auto resolution timed out
+  //     },
+  //   );
+  // }
 
   //Email Login
   Future<void> loginWithEmail({

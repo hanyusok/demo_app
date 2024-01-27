@@ -306,7 +306,7 @@ class _LoginPageState extends State<LoginPage>
                                               padding:
                                                   const EdgeInsetsDirectional
                                                       .fromSTEB(
-                                                      0.0, 24.0, 0.0, 24.0),
+                                                      0.0, 24.0, 0.0, 10.0),
                                               child: ElevatedButton(
                                                 onPressed: loginUser,
                                                 style: ElevatedButton.styleFrom(
@@ -335,7 +335,7 @@ class _LoginPageState extends State<LoginPage>
                                               )),
                                           Padding(
                                             padding: const EdgeInsetsDirectional
-                                                .fromSTEB(0.0, 10.0, 0.0, 24.0),
+                                                .fromSTEB(0.0, 10.0, 0.0, 10.0),
                                             child: ElevatedButton(
                                                 style: ElevatedButton.styleFrom(
                                                     foregroundColor:
@@ -383,8 +383,33 @@ class _LoginPageState extends State<LoginPage>
                                                 onPressed: () {},
                                                 child: const Text('임시 계정')),
                                           ),
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0.0, 10.0, 0.0, 24.0),
+                                            child: ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                    foregroundColor:
+                                                        CustomTheme.of(context)
+                                                            .primaryText,
+                                                    backgroundColor:
+                                                        CustomTheme.of(context)
+                                                            .primaryBackground,
+                                                    elevation: 3.0,
+                                                    minimumSize:
+                                                        const Size(230, 50),
+                                                    textStyle: const TextStyle(
+                                                        fontSize: 18),
+                                                    shape: RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(40))),
+                                                onPressed: () {},
+                                                child:
+                                                    const Text('Google Sign In')),
+                                          ),
                                         ])),
                                   ),
+
                                   /* ----------------- SIGN UP  ------------------------------*/
                                   Padding(
                                     padding:
