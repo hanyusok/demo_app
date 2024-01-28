@@ -54,6 +54,10 @@ class _LoginPageState extends State<LoginPage>
         context: context);
   }
 
+  void anonymousUser() async {
+    FbAuthService(FirebaseAuth.instance).anonymousUserSign(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -380,7 +384,7 @@ class _LoginPageState extends State<LoginPage>
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(40))),
-                                                onPressed: () {},
+                                                onPressed: anonymousUser,
                                                 child: const Text('임시 계정')),
                                           ),
                                           Padding(
@@ -403,9 +407,13 @@ class _LoginPageState extends State<LoginPage>
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(40))),
-                                                onPressed: () {},
-                                                child:
-                                                    const Text('Google Sign In')),
+                                                onPressed: () {
+                                                  FbAuthService(
+                                                          FirebaseAuth.instance)
+                                                      .googleUserLogin(context);
+                                                },
+                                                child: const Text(
+                                                    'Google Sign In')),
                                           ),
                                         ])),
                                   ),
@@ -626,7 +634,7 @@ class _LoginPageState extends State<LoginPage>
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(40))),
-                                                onPressed: () {},
+                                                onPressed: anonymousUser,
                                                 child: const Text('임시 계정')),
                                           ),
                                         ])),

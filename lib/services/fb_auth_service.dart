@@ -3,8 +3,12 @@
 // import 'dart:html';
 
 // import 'package:demo_app/services/show_otp_dialog.dart';
+import 'dart:developer';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class FbAuthService {
   final FirebaseAuth _auth;
@@ -45,7 +49,47 @@ class FbAuthService {
     }
   }
 
-//PHONE SIGN IN
+  // Anonymous sign in
+  Future<void> anonymousUserSign(BuildContext context) async {
+    try {
+      await _auth.signInAnonymously();
+    } on FirebaseAuthException catch (e) {
+      log(e.message.toString());
+    }
+  }
+
+  // Google Sign in
+  Future<void> googleUserLogin(BuildContext context) async {
+    try {
+      if (kIsWeb) {
+        GoogleAuthProvider googleProvider = GoogleAuthProvider();
+        googleProvider
+            .addScope('https://wwww.googleapis.com/auth/contacts.readonly');
+        await _auth.signInWithPopup(googleProvider);
+      } else {
+        final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+        final GoogleSignInAuthentication? googleAuth =
+            await googleUser?.authentication;
+
+        if (googleAuth?.accessToken != null && googleAuth?.idToken != null) {
+          final credential = GoogleAuthProvider.credential(
+              accessToken: googleAuth?.accessToken,
+              idToken: googleAuth?.idToken);
+          UserCredential userCredential =
+              await _auth.signInWithCredential(credential);
+          if (userCredential.user != null) {
+            if (userCredential.additionalUserInfo!.isNewUser) {
+              //
+            }
+          }
+        }
+      }
+    } on FirebaseAuthException catch (e) {
+      log(e.message.toString());
+    }
+  }
+
+  //PHONE SIGN IN
   // Future<void> phoneSignIn(BuildContext context, String phoneNumber) async {
   //   //For Android or Ios
   //   TextEditingController codeController = TextEditingController();
