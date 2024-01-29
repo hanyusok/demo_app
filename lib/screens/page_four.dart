@@ -4,6 +4,7 @@
 
 import 'dart:developer';
 
+import 'package:demo_app/services/fb_auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -49,10 +50,7 @@ class _PageFourState extends State<PageFour> {
 }
 
 Future<void> signout() async {
-  await FirebaseAuth.instance.signOut();
   User? user = FirebaseAuth.instance.currentUser;
-
-  // late String? user = FirebaseAuth.instance.authStateChanges();
-  // currentUser?.email.toString();
-  log('$user : log out!');
+  await FirebaseAuth.instance.signOut();
+  log('${user?.uid} : log out!');
 }

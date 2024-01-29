@@ -14,6 +14,10 @@ class FbAuthService {
   final FirebaseAuth _auth;
   FbAuthService(this._auth);
 
+  User? get user => _auth.currentUser!;
+  //state persistence
+  Stream<User?> get authState => _auth.authStateChanges();
+
   //Email Sign up
   Future<void> signUpWithEmail({
     required String email,
@@ -176,5 +180,23 @@ class FbAuthService {
         ));
       }
     }
+  }
+
+  // log out
+  Future<void> userLogout(BuildContext context) async {
+    try {
+      await _auth.signOut();
+    } on FirebaseAuthException catch (e) {
+      log(e.message.toString());
+    }
+//
+    // if (user != null) {
+    //   await _auth.signOut();
+    // }
+    if (!context.mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text('로그아웃!'),
+      duration: Duration(seconds: 3),
+    ));
   }
 }
