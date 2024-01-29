@@ -183,20 +183,4 @@ class FbAuthService {
   }
 
   // log out
-  Future<void> userLogout(BuildContext context) async {
-    try {
-      await _auth.signOut();
-    } on FirebaseAuthException catch (e) {
-      log(e.message.toString());
-    }
-//
-    // if (user != null) {
-    //   await _auth.signOut();
-    // }
-    if (!context.mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text('로그아웃!'),
-      duration: Duration(seconds: 3),
-    ));
-  }
 }

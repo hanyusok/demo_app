@@ -41,9 +41,9 @@ class _HomePageState extends State<HomePage> {
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_currentPageName),
-      ),
+      // appBar: AppBar(
+      // title: Text(_currentPageName),
+      // ),
       body: _currentPage ?? tabs[_currentPageName],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
