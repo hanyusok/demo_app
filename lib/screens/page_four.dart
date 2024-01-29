@@ -1,15 +1,10 @@
-/* page_four => "settings_page.dart" '개인설정, 가족추가'  
- reservation: profilePage
-*/
-
-// import 'dart:js_util';
-
 import 'dart:developer';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo_app/themes/custom_radio_button.dart';
-// import 'package:demo_app/services/fb_auth_service.dart';
 import 'package:demo_app/themes/custom_theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:demo_app/services/profile_service.dart';
 
 class PageFour extends StatefulWidget {
   const PageFour({super.key});
@@ -19,9 +14,39 @@ class PageFour extends StatefulWidget {
 }
 
 class _PageFourState extends State<PageFour> {
-  TextEditingController? _yourNameController;
+  TextEditingController? _nameController;
   TextEditingController? _juminController;
   TextEditingController? _phoneController;
+  TextEditingController? _genderController;
+  // final formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  void signout() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    await FirebaseAuth.instance.signOut();
+    log('${user?.uid} : log out!');
+  }
+
+  void addProfile() async {
+    await ProfileService().newUserProfile(
+        _nameController!.text,
+        _juminController!.text,
+        _phoneController!.text,
+        _genderController!.text);
+
+    if (!context.mounted) return;
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,7 +117,8 @@ class _PageFourState extends State<PageFour> {
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             20.0, 20.0, 20.0, 0.0),
                         child: TextFormField(
-                          controller: _yourNameController,
+                          // key: formKey,
+                          controller: _nameController,
                           // focusNode: _model.yourNameFocusNode,
                           obscureText: false,
                           decoration: InputDecoration(
@@ -279,9 +305,8 @@ class _PageFourState extends State<PageFour> {
                                   '비공개',
                                 ].toList(),
                                 onChanged: (val) => setState(() {}),
-                                controller: null,
-                                // radioButtonValueController ??=
-                                //     TextEditingController<String>(null),
+                                controller: _genderController ??=
+                                    TextEditingController(),
                                 optionHeight: 25.0,
                                 textStyle: CustomTheme.of(context).bodySmall,
                                 selectedTextStyle:
@@ -291,8 +316,8 @@ class _PageFourState extends State<PageFour> {
                                         0.0, 0.0, 15.0, 0.0),
                                 buttonPosition: RadioButtonPosition.left,
                                 direction: Axis.horizontal,
-                                radioButtonColor:
-                                    CustomTheme.of(context).primary,
+                                radioButtonColor: Colors.indigo,
+                                /* CustomTheme.of(context).primary, */
                                 inactiveRadioButtonColor:
                                     CustomTheme.of(context).grayLight,
                                 toggleable: false,
@@ -312,101 +337,43 @@ class _PageFourState extends State<PageFour> {
                     //   tabletLandscape: false,
                     //   desktop: false,
                     // ))
-                    // Padding(
-                    //   padding:
-                    //       EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
-                    //   child: FFButtonWidget(
-                    //     onPressed: () async {
-                    //       context.pushNamed('addAnotherProfile');
-                    //     },
-                    //     text: FFLocalizations.of(context).getText(
-                    //       'axtm7ab1' /* Add Another Profile */,
-                    //     ),
-                    //     icon: Icon(
-                    //       Icons.add_rounded,
-                    //       size: 15.0,
-                    //     ),
-                    //     options: FFButtonOptions(
-                    //       width: 230.0,
-                    //       height: 50.0,
-                    //       padding: EdgeInsetsDirectional.fromSTEB(
-                    //           0.0, 0.0, 0.0, 0.0),
-                    //       iconPadding: EdgeInsetsDirectional.fromSTEB(
-                    //           0.0, 0.0, 0.0, 0.0),
-                    //       color: CustomTheme.of(context).secondaryBackground,
-                    //       textStyle:
-                    //           CustomTheme.of(context).titleSmall.override(
-                    //                 fontFamily: 'Outfit',
-                    //                 color: CustomTheme.of(context).primaryText,
-                    //               ),
-                    //       elevation: 3.0,
-                    //       borderSide: BorderSide(
-                    //         color: Colors.transparent,
-                    //         width: 1.0,
-                    //       ),
-                    //       borderRadius: BorderRadius.circular(40.0),
-                    //     ),
-                    //   ).animateOnPageLoad(
-                    //       animationsMap['buttonOnPageLoadAnimation1']!),
-                    // ),
-                    // Padding(
-                    //   padding: const EdgeInsetsDirectional.fromSTEB(
-                    //       0.0, 24.0, 0.0, 0.0),
-                    //   child:
-                    // StreamBuilder<UsersRecord>(
-                    //   stream: UsersRecord.getDocument(currentUserReference!),
-                    //   builder: (context, snapshot) {
-                    //     // Customize what your widget looks like when it's loading.
-                    //     if (!snapshot.hasData) {
-                    //       return Center(
-                    //         child: SizedBox(
-                    //           width: 40.0,
-                    //           height: 40.0,
-                    //           child: SpinKitPumpingHeart(
-                    //             color: CustomTheme.of(context).primary,
-                    //             size: 40.0,
-                    //           ),
-                    //         ),
-                    //       );
-                    //     }
-                    //     final buttonLoginUsersRecord = snapshot.data!;
-                    //     return FFButtonWidget(
-                    //       onPressed: () async {
-                    //         await buttonLoginUsersRecord.reference
-                    //             .update(createUsersRecordData(
-                    //           displayName: _model.yourNameController.text,
-                    //           age:
-                    //               int.tryParse(_model.yourAgeController.text),
-                    //           ailments: _model.ailmentsController.text,
-                    //           userSex: _model.radioButtonValue,
-                    //         ));
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          0.0, 15.0, 0.0, 0.0),
+                      child: ElevatedButton(
+                        onPressed: addProfile,
+                        style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            backgroundColor: CustomTheme.of(context).primary,
+                            elevation: 3.0,
+                            side: const BorderSide(
+                                color: Colors.transparent, width: 1.0),
+                            minimumSize: const Size(230, 50),
+                            textStyle: TextStyle(
+                                fontSize: 18,
+                                color: CustomTheme.of(context).textColor),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(40))),
+                        child: const Text('설정하기'),
+                      ),
+                    ),
+                    /*---  나중에 삭제하자  ---*/
 
-                    //         context.pushNamed('homePage');
-                    //       },
-                    //       text: FFLocalizations.of(context).getText(
-                    //         'nj8ntcvx' /* Complete Profile */,
-                    //       ),
-                    //       options: FFButtonOptions(
-                    //         width: 230.0,
-                    //         height: 50.0,
-                    //         padding: EdgeInsetsDirectional.fromSTEB(
-                    //             0.0, 0.0, 0.0, 0.0),
-                    //         iconPadding: EdgeInsetsDirectional.fromSTEB(
-                    //             0.0, 0.0, 0.0, 0.0),
-                    //         color: CustomTheme.of(context).primary,
-                    //         textStyle: CustomTheme.of(context).titleSmall,
-                    //         elevation: 3.0,
-                    //         borderSide: BorderSide(
-                    //           color: Colors.transparent,
-                    //           width: 1.0,
-                    //         ),
-                    //         borderRadius: BorderRadius.circular(40.0),
-                    //       ),
-                    //     // ).animateOnPageLoad(
-                    //     //     animationsMap['buttonOnPageLoadAnimation2']!);
-                    //   },
-                    // ),
-                    // ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0,
+                        24.0,
+                        0.0,
+                        0.0,
+                      ),
+                      child: ElevatedButton(
+                        onPressed: signout,
+                        child: const Text(
+                          'log out',
+                          style: TextStyle(),
+                        ),
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -414,39 +381,6 @@ class _PageFourState extends State<PageFour> {
           ),
         ],
       ),
-
-      // const SafeArea(
-      //     top: true,
-      //     child: Column(
-      //       mainAxisSize: MainAxisSize.max,
-      //       children: [
-      //         Padding(
-      //           padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 12.0),
-      //           child: Row(mainAxisSize: MainAxisSize.max, children: [
-      //             Text(
-      //               '설정',
-      //               // style: CustomTheme.of(context).bodySmall,
-      //               /* customTheme bodySmall 설정 확인!  */
-      //             ),
-      //           ]),
-      //         ),
-      //         // Expanded(child: ),
-      //         Text('개인, 가족 추가, 약국, 처방전 설정,'),
-      //         ElevatedButton(
-      //           onPressed: signout,
-      //           child: Text(
-      //             'Log out',
-      //             style: TextStyle(),
-      //           ),
-      //         )
-      //       ],
-      //     )),
     );
   }
-}
-
-Future<void> signout() async {
-  User? user = FirebaseAuth.instance.currentUser;
-  await FirebaseAuth.instance.signOut();
-  log('${user?.uid} : log out!');
 }

@@ -57,6 +57,8 @@ class FbAuthService {
   Future<void> anonymousUserSign(BuildContext context) async {
     try {
       await _auth.signInAnonymously();
+      if (!context.mounted) return;
+      log('${user!.uid} logged in.');
     } on FirebaseAuthException catch (e) {
       log(e.message.toString());
     }
