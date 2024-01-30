@@ -1,26 +1,28 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:flutter/widgets.dart';
 
-class UserModel {
+class Profile {
+  String? id;
   String? name;
   String? jumin;
-  String? gender;
+  String? member;
   String? phone;
   Timestamp? createdAt;
   Timestamp? updatedAt;
-  UserModel({
+  Profile({
+    required this.id,
     required this.name,
     required this.jumin,
-    required this.gender,
+    required this.member,
     required this.phone,
     required this.createdAt,
     required this.updatedAt,
   });
 
-  UserModel.fromMap(Map<String, dynamic> map) {
+  Profile.fromMap(Map<String, dynamic> map) {
+    id = map['id'];
     name = map['name'];
     jumin = map['jumin'];
-    gender = map['gender'];
+    member = map['member'];
     phone = map['phone'];
     createdAt = map['createdAt'];
     updatedAt = map['updatedAt'];
@@ -28,9 +30,10 @@ class UserModel {
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {
+      'id': id,
       'name': name,
       'jumin': jumin,
-      'gender': gender,
+      'member': member,
       'phone': phone,
       'createdAt': createdAt,
       'updatedAt': updatedAt,

@@ -1,8 +1,7 @@
 /* => profile */
 import 'dart:developer';
-// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:demo_app/models/user_model.dart';
+import 'package:demo_app/models/profile.dart';
 import 'package:demo_app/themes/custom_radio_button.dart';
 import 'package:demo_app/themes/custom_theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,9 +20,9 @@ class _PageFourState extends State<PageFour> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _juminController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _genderController = TextEditingController();
+  final TextEditingController _memberController = TextEditingController();
   // final formKey = GlobalKey<FormState>();
-
+  final User? user = FirebaseAuth.instance.currentUser;
   @override
   void initState() {
     super.initState();
@@ -35,7 +34,6 @@ class _PageFourState extends State<PageFour> {
   }
 
   void signout() async {
-    User? user = FirebaseAuth.instance.currentUser;
     await FirebaseAuth.instance.signOut();
     log('${user?.uid} : log out!');
   }
@@ -156,10 +154,7 @@ class _PageFourState extends State<PageFour> {
                           ),
                           style: CustomTheme.of(context).bodyMedium,
                           validator: null,
-                        )
-                        // .animateOnPageLoad(
-                        //     animationsMap['textFieldOnPageLoadAnimation1']!),
-                        ),
+                        )),
                     Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             20.0, 20.0, 20.0, 0.0),
@@ -210,10 +205,7 @@ class _PageFourState extends State<PageFour> {
                           style: CustomTheme.of(context).bodyMedium,
                           keyboardType: TextInputType.number,
                           validator: null,
-                        )
-                        //.animateOnPageLoad(
-                        //        animationsMap['textFieldOnPageLoadAnimation2']!),
-                        ),
+                        )),
                     Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             20.0, 20.0, 20.0, 0.0),
@@ -264,10 +256,7 @@ class _PageFourState extends State<PageFour> {
                           style: CustomTheme.of(context).bodyMedium,
                           keyboardType: TextInputType.number,
                           validator: null,
-                        )
-                        // .animateOnPageLoad(
-                        //     animationsMap['textFieldOnPageLoadAnimation3']!),
-                        ),
+                        )),
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(
                           20.0, 12.0, 20.0, 0.0),
@@ -275,17 +264,15 @@ class _PageFourState extends State<PageFour> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Text(
-                            '성별',
+                            '가족관계',
                             style: CustomTheme.of(context).bodyMedium,
                           )
-                          // .animateOnPageLoad(
-                          //     animationsMap['textOnPageLoadAnimation2']!),
                         ],
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(
-                          20.0, 12.0, 20.0, 0.0),
+                          10.0, 12.0, 10.0, 0.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -293,19 +280,20 @@ class _PageFourState extends State<PageFour> {
                               alignment: const AlignmentDirectional(0.0, 0.0),
                               child: CustomRadioButton(
                                 options: [
-                                  '남성',
-                                  '여성',
-                                  '비공개',
+                                  '본인',
+                                  '배우자',
+                                  '부모',
+                                  '자녀',
                                 ].toList(),
                                 onChanged: (val) => setState(() {}),
-                                controller: _genderController,
+                                controller: _memberController,
                                 optionHeight: 25.0,
                                 textStyle: CustomTheme.of(context).bodySmall,
                                 selectedTextStyle:
                                     CustomTheme.of(context).bodyMedium,
                                 textPadding:
                                     const EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 15.0, 0.0),
+                                        0.0, 0.0, 0.0, 0.0),
                                 buttonPosition: RadioButtonPosition.left,
                                 direction: Axis.horizontal,
                                 radioButtonColor: Colors.indigo,
@@ -315,29 +303,20 @@ class _PageFourState extends State<PageFour> {
                                 toggleable: false,
                                 horizontalAlignment: WrapAlignment.center,
                                 verticalAlignment: WrapCrossAlignment.start,
-                              )
-                              // .animateOnPageLoad(animationsMap[
-                              //     'radioButtonOnPageLoadAnimation']!),
-                              ),
+                              )),
                         ],
                       ),
                     ),
-                    // if (responsiveVisibility(
-                    //   context: context,
-                    //   phone: false,
-                    //   tablet: false,
-                    //   tabletLandscape: false,
-                    //   desktop: false,
-                    // ))
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(
                           0.0, 15.0, 0.0, 0.0),
                       child: ElevatedButton(
                         onPressed: () {
-                          UserModel userProfile = UserModel(
+                          Profile userProfile = Profile(
+                              id: user!.uid,
                               name: _nameController.text,
                               jumin: _juminController.text,
-                              gender: _genderController.text,
+                              member: _memberController.text,
                               phone: _phoneController.text,
                               createdAt: Timestamp.now(),
                               updatedAt: null);
