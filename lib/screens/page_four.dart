@@ -1,5 +1,8 @@
+/* => profile */
 import 'dart:developer';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:demo_app/models/user_model.dart';
 import 'package:demo_app/themes/custom_radio_button.dart';
 import 'package:demo_app/themes/custom_theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,10 +17,11 @@ class PageFour extends StatefulWidget {
 }
 
 class _PageFourState extends State<PageFour> {
-  TextEditingController? _nameController;
-  TextEditingController? _juminController;
-  TextEditingController? _phoneController;
-  TextEditingController? _genderController;
+  final ProfileService _profileService = ProfileService();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _juminController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _genderController = TextEditingController();
   // final formKey = GlobalKey<FormState>();
 
   @override
@@ -34,17 +38,6 @@ class _PageFourState extends State<PageFour> {
     User? user = FirebaseAuth.instance.currentUser;
     await FirebaseAuth.instance.signOut();
     log('${user?.uid} : log out!');
-  }
-
-  void addProfile() async {
-    await ProfileService().newUserProfile(
-        _nameController!.text,
-        _juminController!.text,
-        _phoneController!.text,
-        _genderController!.text);
-
-    if (!context.mounted) return;
-    Navigator.pop(context);
   }
 
   @override
@@ -305,8 +298,7 @@ class _PageFourState extends State<PageFour> {
                                   '비공개',
                                 ].toList(),
                                 onChanged: (val) => setState(() {}),
-                                controller: _genderController ??=
-                                    TextEditingController(),
+                                controller: _genderController,
                                 optionHeight: 25.0,
                                 textStyle: CustomTheme.of(context).bodySmall,
                                 selectedTextStyle:
@@ -341,7 +333,16 @@ class _PageFourState extends State<PageFour> {
                       padding: const EdgeInsetsDirectional.fromSTEB(
                           0.0, 15.0, 0.0, 0.0),
                       child: ElevatedButton(
-                        onPressed: addProfile,
+                        onPressed: () {
+                          UserModel userProfile = UserModel(
+                              name: _nameController.text,
+                              jumin: _juminController.text,
+                              gender: _genderController.text,
+                              phone: _phoneController.text,
+                              createdAt: Timestamp.now(),
+                              updatedAt: null);
+                          _profileService.addUserProfile(userProfile);
+                        },
                         style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.white,
                             backgroundColor: CustomTheme.of(context).primary,

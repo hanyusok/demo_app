@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo_app/screens/home_page.dart';
 import 'package:demo_app/firebase_options.dart';
 import 'package:demo_app/screens/logins/login_page.dart';
@@ -13,18 +14,13 @@ import 'package:demo_app/screens/users_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
 
-// import 'package:demo_app/themes/custom_theme.dart';
-
-// late final FirebaseApp app;
-// late final FirebaseAuth auth;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-
+  FirebaseFirestore.instance.settings =
+      const Settings(persistenceEnabled: true);
   runApp(const MyApp());
 }
 

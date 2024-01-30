@@ -1,30 +1,46 @@
-import 'dart:developer';
+// import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:demo_app/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class ProfileService {
-  User? user = FirebaseAuth.instance.currentUser;
-  final db = FirebaseFirestore.instance;
-  late DocumentSnapshot snapshot;
+  final User? user = FirebaseAuth.instance.currentUser;
+  final _firestore = FirebaseFirestore.instance;
+  late final CollectionReference? _usersRef;
 
-  Future newUserProfile(
-      String name, String jumin, String phone, String gender) async {
-    Map<String, dynamic> data = {
-      "name": name,
-      "jumin": jumin,
-      "phone": phone,
-      "gender": gender,
-    };
-    try {
-      await db
-          .collection("users")
-          .doc(user!.uid)
-          .update(data)
-          .then((snapshot) => log("doc added."));
-    } catch (e) {
-      log(e.toString());
-    }
+  ProfileService() {
+    _usersRef = _firestore.collection("users").withConverter<UserModel>(
+        fromFirestore: (snapshots, _) => UserModel.fromMap(
+              snapshots.data()!,
+            ),
+        toFirestore: (userData, _) => userData.toMap());
   }
+
+  Stream<QuerySnapshot> getUsers() {
+    return _usersRef!.snapshots();
+  }
+
+  void addUserProfile(UserModel userModel) async {
+    _usersRef?.add(userModel);
+  }
+  // Future newUserProfile(
+  //     String? name, String? jumin, String? phone, String? gender) async {
+  //   Map<String, dynamic> data = {
+  //     "name": name,
+  //     "jumin": jumin,
+  //     "phone": phone,
+  //     "gender": gender,
+  //   };
+  //   try {
+  //     await FirebaseFirestore.instance
+  //         .collection("users")
+  //         .doc(user!.uid)
+  //         .update(data)
+  //         .then((snapshot) => log("doc added."));
+  //   } catch (e) {
+  //     log(e.toString());
+  //   }
+  // }
 }
 
 
