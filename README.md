@@ -2,11 +2,12 @@
 
 A new Flutter project.
 
-## Getting Started
+## Contents
+1. user create/edit/delete Profiles
+2. user create Qrcode out of Profiles on boarding pass UI
+...
 
-
-## Navi Tree
-
+### firestore auth
 https://www.youtube.com/watch?v=u8H652UY-L8&ab_channel=RivaanRanawat
 
 ### firestore CRUD

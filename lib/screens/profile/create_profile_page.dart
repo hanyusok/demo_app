@@ -8,16 +8,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:demo_app/services/profile_service.dart';
 
-class PageFour extends StatefulWidget {
-  const PageFour({super.key});
+class CreateProfilePage extends StatefulWidget {
+  const CreateProfilePage({super.key});
 
   @override
-  State<PageFour> createState() => _PageFourState();
+  State<CreateProfilePage> createState() => _CreateProfilePageState();
 }
 
-class _PageFourState extends State<PageFour> {
+class _CreateProfilePageState extends State<CreateProfilePage> {
   final ProfileService _profileService = ProfileService();
-  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _displayNameController = TextEditingController();
   final TextEditingController _juminController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _memberController = TextEditingController();
@@ -109,7 +109,7 @@ class _PageFourState extends State<PageFour> {
                             20.0, 20.0, 20.0, 0.0),
                         child: TextFormField(
                           // key: formKey,
-                          controller: _nameController,
+                          controller: _displayNameController,
                           // focusNode: _model.yourNameFocusNode,
                           obscureText: false,
                           decoration: InputDecoration(
@@ -314,7 +314,7 @@ class _PageFourState extends State<PageFour> {
                         onPressed: () {
                           Profile userProfile = Profile(
                               id: user!.uid,
-                              name: _nameController.text,
+                              displayName: _displayNameController.text,
                               jumin: _juminController.text,
                               member: _memberController.text,
                               phone: _phoneController.text,
@@ -337,23 +337,6 @@ class _PageFourState extends State<PageFour> {
                         child: const Text('설정하기'),
                       ),
                     ),
-                    /*---  나중에 삭제하자  ---*/
-
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                        0.0,
-                        24.0,
-                        0.0,
-                        0.0,
-                      ),
-                      child: ElevatedButton(
-                        onPressed: signout,
-                        child: const Text(
-                          'log out',
-                          style: TextStyle(),
-                        ),
-                      ),
-                    )
                   ],
                 ),
               ),

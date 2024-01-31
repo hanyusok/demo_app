@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo_app/screens/home_page.dart';
 import 'package:demo_app/firebase_options.dart';
 import 'package:demo_app/screens/logins/login_page.dart';
-import 'package:demo_app/screens/page_four.dart';
+// import 'package:demo_app/screens/page_four.dart';
 import 'package:demo_app/screens/page_one.dart';
 import 'package:demo_app/screens/page_three.dart';
 import 'package:demo_app/screens/page_two.dart';
@@ -66,7 +66,7 @@ class _MyAppState extends State<MyApp> {
         '/subonepage': (context) => const SubonePage(),
         '/subtwopage': (context) => const SubtwoPage(),
         '/subthreepage': (context) => const SubthreePage(),
-        '/pagefour': (context) => const PageFour(),
+        // '/pagefour': (context) => const PageFour(),
         '/pageOne': (context) => const PageOne(),
         '/pageThree': (context) => const PageThree(),
         '/pageTwo': (context) => const PageTwo(),

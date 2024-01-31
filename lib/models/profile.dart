@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Profile {
   String? id;
-  String? name;
+  String? displayName;
   String? jumin;
   String? member;
   String? phone;
@@ -10,7 +10,7 @@ class Profile {
   Timestamp? updatedAt;
   Profile({
     required this.id,
-    required this.name,
+    required this.displayName,
     required this.jumin,
     required this.member,
     required this.phone,
@@ -20,7 +20,7 @@ class Profile {
 
   Profile.fromMap(Map<String, dynamic> map) {
     id = map['id'];
-    name = map['name'];
+    displayName = map['displayName'];
     jumin = map['jumin'];
     member = map['member'];
     phone = map['phone'];
@@ -31,7 +31,7 @@ class Profile {
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {
       'id': id,
-      'name': name,
+      'displayName': displayName,
       'jumin': jumin,
       'member': member,
       'phone': phone,

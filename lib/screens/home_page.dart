@@ -1,7 +1,10 @@
-import 'package:demo_app/screens/page_one.dart';
+// import 'package:demo_app/screens/page_one.dart';
 import 'package:demo_app/screens/page_two.dart';
-import 'package:demo_app/screens/page_three.dart';
-import 'package:demo_app/screens/page_four.dart';
+// import 'package:demo_app/screens/page_three.dart';
+// import 'package:demo_app/screens/page_four.dart';
+import 'package:demo_app/screens/profile/create_profile_page.dart';
+import 'package:demo_app/screens/profile/edit_profile_page.dart';
+import 'package:demo_app/screens/profile/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:demo_app/themes/custom_theme.dart';
 
@@ -33,10 +36,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'pageOne': const PageOne(),
+      'pageOne': const EditProfilePage(),
       'pageTwo': const PageTwo(),
-      'pageThree': const PageThree(),
-      'pageFour': const PageFour(),
+      // 'pageThree': const PageThree(),
+      'pageThree': const ProfilePage(),
+      // 'pageFour': const PageFour(),
+      'pageFour': const CreateProfilePage(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -103,7 +108,7 @@ class _HomePageState extends State<HomePage> {
               Icons.account_circle_rounded,
               size: 24.0,
             ),
-            label: 'Page Four',
+            label: '사용자',
             tooltip: '',
           )
         ],

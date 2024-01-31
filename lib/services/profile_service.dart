@@ -20,7 +20,7 @@ class ProfileService {
             toFirestore: (userData, _) => userData.toMap());
   }
 
-  Stream<QuerySnapshot> getUsers() {
+  Stream<QuerySnapshot> getUserProfiles() {
     return _usersRef!.snapshots();
   }
 
@@ -28,41 +28,3 @@ class ProfileService {
     _usersRef?.add(profile);
   }
 }
-
-
-          // Padding(
-                    //   padding: const ),
-                    //   child:
-                    // StreamBuilder<UsersRecord>(
-                    //   stream: UsersRecord.getDocument(currentUserReference!),
-                    //   builder: (context, snapshot) {
-                    //     // Customize what your widget looks like when it's loading.
-                    //     if (!snapshot.hasData) {
-                    //       return Center(
-                    //         child: SizedBox(
-                    //           width: 40.0,
-                    //           height: 40.0,
-                    //           child: SpinKitPumpingHeart(
-                    //             color: CustomTheme.of(context).primary,
-                    //             size: 40.0,
-                    //           ),
-                    //         ),
-                    //       );
-                    //     }
-                    //     final buttonLoginUsersRecord = snapshot.data!;
-                    //     return FFButtonWidget(
-                    //       onPressed: () async {
-                    //         await buttonLoginUsersRecord.reference
-                    //             .update(createUsersRecordData(
-                    //           displayName: _model.yourNameController.text,
-                    //           age:
-                    //               int.tryParse(_model.yourAgeController.text),
-                    //           ailments: _model.ailmentsController.text,
-                    //           userSex: _model.radioButtonValue,
-                    //         ));
-
-                    //         context.pushNamed('homePage');
-                    //       },
-                    //       text: FFLocalizations.of(context).getText(
-                    //         'nj8ntcvx' /* Complete Profile */,
-                    //       ),

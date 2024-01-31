@@ -28,7 +28,7 @@ abstract class CustomTheme {
 
 // color 입력해야
   late Color? primary = Colors.indigo[400];
-  late Color secondary;
+  late Color? secondary = Colors.deepOrange[200];
   late Color? tertiary = Colors.tealAccent;
   late Color? alternate = Colors.grey[100];
   late Color? primaryText = Colors.grey[800];
