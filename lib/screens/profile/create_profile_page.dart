@@ -1,12 +1,15 @@
 /* => profile */
 import 'dart:developer';
+import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo_app/models/profile.dart';
+import 'package:demo_app/services/util.dart';
 import 'package:demo_app/themes/custom_radio_button.dart';
 import 'package:demo_app/themes/custom_theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:demo_app/services/profile_service.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CreateProfilePage extends StatefulWidget {
   const CreateProfilePage({super.key});
@@ -17,6 +20,7 @@ class CreateProfilePage extends StatefulWidget {
 
 class _CreateProfilePageState extends State<CreateProfilePage> {
   final ProfileService _profileService = ProfileService();
+  Uint8List? _image;
   final TextEditingController _displayNameController = TextEditingController();
   final TextEditingController _juminController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
@@ -32,6 +36,13 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   @override
   void dispose() {
     super.dispose();
+  }
+
+  void selectImage() async {
+    Uint8List img = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = img;
+    });
   }
 
   void signout() async {
@@ -92,15 +103,41 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Container(
-                      width: 120.0,
-                      height: 120.0,
-                      clipBehavior: Clip.antiAlias,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                      ),
-                      child: Image.asset('assets/images/uiAvatar@2x.png'),
+                    Stack(
+                      children: [
+                        _image != null
+                            ? CircleAvatar(
+                                radius: 50,
+                                backgroundImage: MemoryImage(_image!),
+                              )
+                            : CircleAvatar(
+                                radius: 50,
+                                backgroundImage: NetworkImage(
+                                    "https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar-thumbnail.png"),
+                                // Image.asset('assets/images/uiAvatar@2x.png'),
+                              ),
+                        Positioned(
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.add_a_photo,
+                              size: 40.0,
+                            ),
+                          ),
+                          bottom: -10,
+                          left: 50,
+                        )
+                      ],
                     ),
+                    // Container(
+                    //   width: 120.0,
+                    //   height: 120.0,
+                    //   clipBehavior: Clip.antiAlias,
+                    //   decoration: const BoxDecoration(
+                    //     shape: BoxShape.circle,
+                    //   ),
+                    //   child: Image.asset('assets/images/uiAvatar@2x.png'),
+                    // ),
                     Text(
                       '귀하를 쉽게 식별하도록 사진을 업로드 하세요',
                       style: CustomTheme.of(context).bodyMedium,
