@@ -6,6 +6,7 @@ class Profile {
   String? jumin;
   String? member;
   String? phone;
+  String? photoUrl;
   Timestamp? createdAt;
   Timestamp? updatedAt;
   Profile({
@@ -14,6 +15,7 @@ class Profile {
     required this.jumin,
     required this.member,
     required this.phone,
+    required this.photoUrl,
     required this.createdAt,
     required this.updatedAt,
   });
@@ -24,6 +26,7 @@ class Profile {
     jumin = map['jumin'];
     member = map['member'];
     phone = map['phone'];
+    photoUrl = map['photoUrl'];
     createdAt = map['createdAt'];
     updatedAt = map['updatedAt'];
   }
@@ -35,6 +38,7 @@ class Profile {
       'jumin': jumin,
       'member': member,
       'phone': phone,
+      'photoUrl': photoUrl,
       'createdAt': createdAt,
       'updatedAt': updatedAt,
     };

@@ -20,6 +20,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   final TextEditingController _displayNameController = TextEditingController();
   final TextEditingController _juminController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _photoUrlController = TextEditingController();
   final TextEditingController _memberController = TextEditingController();
   // final formKey = GlobalKey<FormState>();
   final User? user = FirebaseAuth.instance.currentUser;
@@ -272,7 +273,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                     ),
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(
-                          10.0, 12.0, 10.0, 0.0),
+                          20.0, 12.0, 20.0, 0.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
@@ -318,6 +319,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                               jumin: _juminController.text,
                               member: _memberController.text,
                               phone: _phoneController.text,
+                              photoUrl: _photoUrlController.text,
                               createdAt: Timestamp.now(),
                               updatedAt: null);
                           _profileService.addUserProfile(userProfile);

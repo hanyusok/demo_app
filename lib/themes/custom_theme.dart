@@ -31,7 +31,7 @@ abstract class CustomTheme {
   late Color? secondary = Colors.deepOrange[200];
   late Color? tertiary = Colors.tealAccent;
   late Color? alternate = Colors.grey[100];
-  late Color? primaryText = Colors.grey[800];
+  late Color? primaryText = Colors.black54;
   late Color? secondaryText = Colors.grey[500];
   late Color? primaryBackground = Colors.grey[100];
   late Color? secondaryBackground = Colors.white;
@@ -45,7 +45,7 @@ abstract class CustomTheme {
   late Color info;
 
   late Color background;
-  late Color darkBackground;
+  late Color? darkBackground = Colors.black87;
   late Color textColor = Colors.white;
   late Color grayDark;
   late Color grayLight = const Color(0xFFD7CCC8);
