@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:demo_app/models/profile.dart';
 import 'package:demo_app/screens/profile/create_profile_page.dart';
 import 'package:demo_app/services/profile_service.dart';
 import 'package:demo_app/themes/custom_theme.dart';
@@ -247,17 +248,15 @@ class _ProfilesPageState extends State<ProfilesPage> {
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 8.0, 0.0, 0.0),
-                                  child: Text(
-                                    userRecentProfile['jumin'],
-                                    style: CustomTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Outfit',
-                                          color:
-                                              CustomTheme.of(context).primary,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                  ),
+                                  child: Text(userRecentProfile['jumin'],
+                                      style: CustomTheme.of(context).bodyMedium
+                                      // .override(
+                                      //   fontFamily: 'Outfit',
+                                      //   color:
+                                      //       CustomTheme.of(context).primary,
+                                      //   fontWeight: FontWeight.w500,
+                                      // ),
+                                      ),
                                 ),
                               ],
                             ),
@@ -295,20 +294,53 @@ class _ProfilesPageState extends State<ProfilesPage> {
                       child: StreamBuilder(
                         stream: _profileService.getUserProfiles(),
                         builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return Center(
+                              child: SizedBox(
+                                width: 40.0,
+                                height: 40.0,
+                                child: SpinKitPumpingHeart(
+                                  color: CustomTheme.of(context).primary,
+                                  size: 40.0,
+                                ),
+                              ),
+                            );
+                          }
+                          List<Profile> profileList =
+                              snapshot.data!.docs as List<Profile>;
+                          if (profileList.isEmpty) {
+                            return const Center(
+                              child: Text('no data...'),
+                            );
+                          }
+
                           return ListView.builder(
                             padding: EdgeInsets.zero,
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
-                            itemCount: userProfiles.length,
+                            itemCount: profileList.length,
                             itemBuilder: (context, index) {
-                              // final _profile = userProfiles[index];
+                              final profile = profileList[index];
                               return Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 8.0),
-                                child: StreamBuilder(
-                                  stream: _profileService.getUserProfiles(),
+                                child: StreamBuilder<List<Profile>>(
+                                  stream: profileList,
                                   builder: (context, snapshot) {
-                                    // final profileList = snapshot.data! as List;
+                                    if (!snapshot.hasData) {
+                                      return Center(
+                                        child: SizedBox(
+                                          width: 40.0,
+                                          height: 40.0,
+                                          child: SpinKitPumpingHeart(
+                                            color:
+                                                CustomTheme.of(context).primary,
+                                            size: 40.0,
+                                          ),
+                                        ),
+                                      );
+                                    }
+
                                     return InkWell(
                                       splashColor: Colors.transparent,
                                       focusColor: Colors.transparent,
@@ -362,7 +394,7 @@ class _ProfilesPageState extends State<ProfilesPage> {
                                                               .fromSTEB(4.0,
                                                               0.0, 0.0, 0.0),
                                                       child: Text(
-                                                        '연습',
+                                                        'ss',
                                                         // listViewAppointmentsRecord
                                                         //     .appointmentType,
                                                         style: CustomTheme.of(

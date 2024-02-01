@@ -19,9 +19,7 @@ class ProfileService {
         .doc(user!.uid)
         .collection("profiles")
         .withConverter<Profile>(
-            fromFirestore: (snapshots, _) => Profile.fromMap(
-                  snapshots.data()!,
-                ),
+            fromFirestore: (snapshots, _) => Profile.fromMap(snapshots.data()!),
             toFirestore: (userData, _) => userData.toMap());
   }
 
