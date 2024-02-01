@@ -110,22 +110,23 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                                 radius: 50,
                                 backgroundImage: MemoryImage(_image!),
                               )
-                            : CircleAvatar(
+                            : const CircleAvatar(
                                 radius: 50,
-                                backgroundImage: NetworkImage(
-                                    "https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar-thumbnail.png"),
-                                // Image.asset('assets/images/uiAvatar@2x.png'),
-                              ),
+                                backgroundImage:
+                                    // NetworkImage(
+                                    //     "https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar-thumbnail.png"),
+                                    NetworkImage(
+                                        'https://firebasestorage.googleapis.com/v0/b/demoapp-83d7f.appspot.com/o/default_avatar.png?alt=media&token=ebfdffd7-3048-4d45-958f-df9e1e7af714')),
                         Positioned(
+                          bottom: -10,
+                          left: 50,
                           child: IconButton(
-                            onPressed: () {},
-                            icon: Icon(
+                            onPressed: selectImage,
+                            icon: const Icon(
                               Icons.add_a_photo,
                               size: 40.0,
                             ),
                           ),
-                          bottom: -10,
-                          left: 50,
                         )
                       ],
                     ),

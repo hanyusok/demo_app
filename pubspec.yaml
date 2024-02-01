@@ -23,6 +23,7 @@ dependencies:
   font_awesome_flutter: ^10.7.0
   auto_size_text: ^3.0.0
   image_picker: ^1.0.7
+  firebase_storage: ^11.6.1
 
 dev_dependencies:
   flutter_test:
@@ -33,7 +34,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/images/
-  #   - images/a_dot_ham.jpeg
+    # - assets/images/default_avatar.png
   fonts:
     - family: Pretendard
       fonts:

@@ -15,4 +15,5 @@ https://youtu.be/G0rsszX4E9Q?si=lfub9QzS1eosikCF
 
 ### firestore image uploader
 https://www.youtube.com/watch?v=BjowvNSdWYE&ab_channel=TrueCoders
+https://youtu.be/5kjjkIdwwN8?si=ancTZP11mOqJp0fM
 
