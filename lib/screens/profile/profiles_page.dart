@@ -1,14 +1,10 @@
 import 'dart:developer';
-
-// import 'package:demo_app/models/profile.dart';
-// import 'package:demo_app/models/profile.dart';
 import 'package:demo_app/screens/profile/create_profile_page.dart';
 import 'package:demo_app/services/profile_service.dart';
 import 'package:demo_app/themes/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:demo_app/themes/custom_icon_button.dart';
-// import 'package:auto_size_text/auto_size_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class ProfilesPage extends StatefulWidget {
