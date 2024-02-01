@@ -1,6 +1,6 @@
 // import 'dart:js_util';
 
-// import 'dart:developer';
+import 'dart:developer';
 // import 'package:email_validator/email_validator.dart';
 // import 'package:demo_app/auth/auth_manager.dart';
 import 'package:demo_app/themes/custom_theme.dart';
@@ -312,7 +312,10 @@ class _LoginPageState extends State<LoginPage>
                                                       .fromSTEB(
                                                       0.0, 24.0, 0.0, 10.0),
                                               child: ElevatedButton(
-                                                onPressed: loginUser,
+                                                onPressed: () {
+                                                  loginUser();
+                                                  log('logged in!');
+                                                },
                                                 style: ElevatedButton.styleFrom(
                                                     foregroundColor:
                                                         Colors.white,

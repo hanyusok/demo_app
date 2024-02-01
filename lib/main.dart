@@ -6,6 +6,7 @@ import 'package:demo_app/screens/logins/login_page.dart';
 import 'package:demo_app/screens/page_one.dart';
 import 'package:demo_app/screens/page_three.dart';
 import 'package:demo_app/screens/page_two.dart';
+import 'package:demo_app/screens/profile/profiles_page.dart';
 import 'package:demo_app/screens/subone_page.dart';
 import 'package:demo_app/screens/subthree_page.dart';
 import 'package:demo_app/screens/subtwo_page.dart';
@@ -70,6 +71,7 @@ class _MyAppState extends State<MyApp> {
         '/pageOne': (context) => const PageOne(),
         '/pageThree': (context) => const PageThree(),
         '/pageTwo': (context) => const PageTwo(),
+        '/profiles': (context) => const ProfilesPage(),
       },
       title: 'Flutter Demo',
       theme: ThemeData(

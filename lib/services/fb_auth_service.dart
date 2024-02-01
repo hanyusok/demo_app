@@ -27,23 +27,28 @@ class FbAuthService {
     try {
       await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
+      if (!context.mounted) return;
+      log('${user!.uid} logged in.');
       // 확인 이메일 전송
       if (!context.mounted) return;
       await sendEmailVerify(context);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
+        log('비밀번호 오류!');
         if (!context.mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('비밀번호 오류!'),
           duration: Duration(seconds: 3),
         ));
       } else if (e.code == 'email-already-in-use') {
+        log('이메일 중복!');
         if (!context.mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('이메일 중복 오류!'),
           duration: Duration(seconds: 3),
         ));
       } else if (e.code == 'invalid-email') {
+        log('이메일 유효하지 않습니다.');
         if (!context.mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text('이메일 형식 오류!'),

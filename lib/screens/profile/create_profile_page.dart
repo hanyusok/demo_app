@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo_app/models/profile.dart';
+import 'package:demo_app/screens/profile/profiles_page.dart';
 import 'package:demo_app/services/util.dart';
 import 'package:demo_app/themes/custom_radio_button.dart';
 import 'package:demo_app/themes/custom_theme.dart';
@@ -24,7 +25,6 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   final TextEditingController _displayNameController = TextEditingController();
   final TextEditingController _juminController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _photoUrlController = TextEditingController();
   final TextEditingController _memberController = TextEditingController();
   // final formKey = GlobalKey<FormState>();
   final User? user = FirebaseAuth.instance.currentUser;
@@ -39,7 +39,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
   }
 
   void selectImage() async {
-    Uint8List img = await pickImage(ImageSource.gallery);
+    Uint8List? img = await pickImage(ImageSource.gallery);
     setState(() {
       _image = img;
     });
@@ -112,11 +112,8 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                               )
                             : const CircleAvatar(
                                 radius: 50,
-                                backgroundImage:
-                                    // NetworkImage(
-                                    //     "https://w7.pngwing.com/pngs/205/731/png-transparent-default-avatar-thumbnail.png"),
-                                    NetworkImage(
-                                        'https://firebasestorage.googleapis.com/v0/b/demoapp-83d7f.appspot.com/o/default_avatar.png?alt=media&token=ebfdffd7-3048-4d45-958f-df9e1e7af714')),
+                                backgroundImage: NetworkImage(
+                                    'https://firebasestorage.googleapis.com/v0/b/demoapp-83d7f.appspot.com/o/default_avatar.png?alt=media&token=ebfdffd7-3048-4d45-958f-df9e1e7af714')),
                         Positioned(
                           bottom: -10,
                           left: 50,
@@ -130,15 +127,6 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                         )
                       ],
                     ),
-                    // Container(
-                    //   width: 120.0,
-                    //   height: 120.0,
-                    //   clipBehavior: Clip.antiAlias,
-                    //   decoration: const BoxDecoration(
-                    //     shape: BoxShape.circle,
-                    //   ),
-                    //   child: Image.asset('assets/images/uiAvatar@2x.png'),
-                    // ),
                     Text(
                       '귀하를 쉽게 식별하도록 사진을 업로드 하세요',
                       style: CustomTheme.of(context).bodyMedium,
@@ -350,18 +338,6 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                       padding: const EdgeInsetsDirectional.fromSTEB(
                           0.0, 15.0, 0.0, 0.0),
                       child: ElevatedButton(
-                        onPressed: () {
-                          Profile userProfile = Profile(
-                              id: user!.uid,
-                              displayName: _displayNameController.text,
-                              jumin: _juminController.text,
-                              member: _memberController.text,
-                              phone: _phoneController.text,
-                              photoUrl: _photoUrlController.text,
-                              createdAt: Timestamp.now(),
-                              updatedAt: null);
-                          _profileService.addUserProfile(userProfile);
-                        },
                         style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.white,
                             backgroundColor: CustomTheme.of(context).primary,
@@ -374,6 +350,29 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                                 color: CustomTheme.of(context).textColor),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(40))),
+                        onPressed: () async {
+                          String? photoUrl;
+                          if (_image != null) {
+                            photoUrl = await _profileService
+                                .uploadImageToStorage('profileImage', _image!);
+                          }
+
+                          Profile userProfile = Profile(
+                              id: user!.uid,
+                              displayName: _displayNameController.text,
+                              jumin: _juminController.text,
+                              member: _memberController.text,
+                              phone: _phoneController.text,
+                              photoUrl: photoUrl,
+                              createdAt: Timestamp.now(),
+                              updatedAt: null);
+                          _profileService.addUserProfile(userProfile);
+                          if (!context.mounted) return;
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const ProfilesPage()));
+                        },
                         child: const Text('설정하기'),
                       ),
                     ),
