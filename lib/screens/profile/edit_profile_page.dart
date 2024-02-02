@@ -1,7 +1,7 @@
 import 'package:demo_app/themes/custom_radio_button.dart';
 import 'package:demo_app/themes/custom_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:demo_app/services/profile_service.dart';
+// import 'package:demo_app/services/profile_service.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class EditProfilePage extends StatefulWidget {
@@ -12,7 +12,7 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
-  final ProfileService _profileService = ProfileService();
+  // final ProfileService _profileService = ProfileService();
   final TextEditingController _displayNameController = TextEditingController();
   final TextEditingController _juminController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
@@ -34,7 +34,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: _profileService.getUserProfiles(),
+      stream: null,
+      // _profileService.getProfiles(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Scaffold(

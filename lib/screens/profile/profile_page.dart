@@ -39,7 +39,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: _profileService.getUserProfiles(),
+      stream: _profileService.getProfiles(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Scaffold(

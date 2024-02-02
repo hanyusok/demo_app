@@ -142,30 +142,33 @@ class FbAuthService {
   }) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
-      if (!_auth.currentUser!.emailVerified) {
-        if (!context.mounted) return;
-        await sendEmailVerify(context);
-      }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        if (!context.mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('사용자 계정 없음!'),
-          duration: Duration(seconds: 3),
-        ));
+        log(e.message.toString());
+        // if (!context.mounted) return;
+        // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        //   content: Text('사용자 계정 없음!'),
+        //   duration: Duration(seconds: 3),
+        // ));
       } else if (e.code == 'invalid-email') {
-        if (!context.mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('유효하지 않는 이메일!'),
-          duration: Duration(seconds: 3),
-        ));
+        log(e.message.toString());
+        // if (!context.mounted) return;
+        // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        //   content: Text('유효하지 않는 이메일!'),
+        //   duration: Duration(seconds: 3),
+        // ));
       } else if (e.code == 'wrong-password') {
-        if (!context.mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('비밀번호 오류!'),
-          duration: Duration(seconds: 3),
-        ));
+        log(e.message.toString());
+        // if (!context.mounted) return;
+        // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        //   content: Text('비밀번호 오류!'),
+        //   duration: Duration(seconds: 3),
+        // ));
       }
+    }
+    if (!_auth.currentUser!.emailVerified) {
+      if (!context.mounted) return;
+      await sendEmailVerify(context);
     }
   }
 

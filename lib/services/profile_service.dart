@@ -10,21 +10,21 @@ import 'package:firebase_storage/firebase_storage.dart';
 final User? user = FirebaseAuth.instance.currentUser;
 final _firestore = FirebaseFirestore.instance;
 final _storage = FirebaseStorage.instance;
-late CollectionReference? _usersRef;
+late CollectionReference? _profileRef;
 
 class ProfileService {
   ProfileService() {
-    _usersRef = _firestore
+    _profileRef = _firestore
         .collection("users")
         .doc(user!.uid)
         .collection("profiles")
         .withConverter<Profile>(
             fromFirestore: (snapshots, _) => Profile.fromMap(snapshots.data()!),
-            toFirestore: (userData, _) => userData.toMap());
+            toFirestore: (profile, _) => profile.toMap());
   }
 
-  Stream<QuerySnapshot> getUserProfiles() {
-    return _usersRef!.snapshots();
+  Stream<QuerySnapshot> getProfiles() {
+    return _profileRef!.snapshots();
   }
 
   Future<String?> uploadImageToStorage(String childName, Uint8List file) async {
@@ -35,8 +35,8 @@ class ProfileService {
     return downloadUrl;
   }
 
-  void addUserProfile(Profile profile) async {
-    _usersRef?.add(profile);
-    log('profile created!');
+  void addProfile(Profile profile) async {
+    _profileRef?.add(profile);
+    log('user :${user?.uid} created profile!');
   }
 }

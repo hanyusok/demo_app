@@ -41,21 +41,21 @@ class _LoginPageState extends State<LoginPage>
   }
 
   void singUpUser() async {
-    FbAuthService(FirebaseAuth.instance).signUpWithEmail(
+    await FbAuthService(FirebaseAuth.instance).signUpWithEmail(
         email: _emailController.text,
         password: _passwordController.text,
         context: context);
   }
 
   void loginUser() async {
-    FbAuthService(FirebaseAuth.instance).loginWithEmail(
+    await FbAuthService(FirebaseAuth.instance).loginWithEmail(
         email: _emailController.text,
         password: _passwordController.text,
         context: context);
   }
 
   void anonymousUser() async {
-    FbAuthService(FirebaseAuth.instance).anonymousUserSign(context);
+    await FbAuthService(FirebaseAuth.instance).anonymousUserSign(context);
   }
 
   @override

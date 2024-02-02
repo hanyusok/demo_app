@@ -322,7 +322,8 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                                     const EdgeInsetsDirectional.fromSTEB(
                                         0.0, 0.0, 0.0, 0.0),
                                 buttonPosition: RadioButtonPosition.left,
-                                direction: Axis.horizontal,
+                                direction:
+                                    axisDirectionToAxis(AxisDirection.right),
                                 radioButtonColor: Colors.indigo,
                                 /* CustomTheme.of(context).primary, */
                                 inactiveRadioButtonColor:
@@ -366,7 +367,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                               photoUrl: photoUrl,
                               createdAt: Timestamp.now(),
                               updatedAt: null);
-                          _profileService.addUserProfile(userProfile);
+                          _profileService.addProfile(userProfile);
                           if (!context.mounted) return;
                           Navigator.push(
                               context,
