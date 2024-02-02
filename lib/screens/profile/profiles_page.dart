@@ -1,6 +1,6 @@
 import 'dart:developer';
-// import 'package:demo_app/models/profile.dart';
 // import 'package:demo_app/screens/profile/create_profile_page.dart';
+// import 'package:demo_app/models/profile.dart';
 import 'package:demo_app/services/profile_service.dart';
 import 'package:demo_app/themes/custom_theme.dart';
 import 'package:flutter/material.dart';
@@ -171,16 +171,6 @@ class _ProfilesPageState extends State<ProfilesPage> {
                                 ),
                                 onPressed: () async {
                                   /* 프로필 수정 페이지로 */
-                                  // context.pushNamed(
-                                  //   'editProfile',
-                                  //   queryParameters: {
-                                  //     'userProfile': serializeParam(
-                                  //       profilePageUsersRecord
-                                  //           .reference,
-                                  //       ParamType.DocumentReference,
-                                  //     ),
-                                  //   }.withoutNulls,
-                                  // );
                                 },
                               ),
                             ),
@@ -326,7 +316,11 @@ class _ProfilesPageState extends State<ProfilesPage> {
     );
   }
 
-  Widget _itembldr(context, indext) {
+  Widget _itembldr(context, index) {
+    final profile = profiles[index].data();
+    late String profileId = profiles[index].id;
+    log('profile id is ${profile.id}');
+    log('profileId is $profileId');
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 8.0),
       child: Card(
@@ -341,17 +335,31 @@ class _ProfilesPageState extends State<ProfilesPage> {
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(8.0, 4.0, 8.0, 4.0),
               child: Text(
-                '연습2',
+                profile.displayName,
                 style: CustomTheme.of(context).bodySmall,
+              ),
+            ),
+            Padding(
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
+                child: Text(
+                  profile.jumin,
+                  style: CustomTheme.of(context).bodyMedium,
+                )),
+            Padding(
+              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
+              child: Text(
+                profile.phone,
+                style: CustomTheme.of(context).bodyMedium,
               ),
             ),
             Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
               child: Text(
-                '연습',
+                profile.createdAt.toString(),
                 style: CustomTheme.of(context).bodyMedium,
               ),
-            ),
+            )
           ],
         ),
       ),
@@ -363,24 +371,7 @@ class _ProfilesPageState extends State<ProfilesPage> {
         // return ListView.builder(      
           // itemBuilder: (context, index) {
             
-        //     return Padding(
-        //       ,
-        //       child: StreamBuilder<List<Profile>>(
-        //         stream: null,
-        //         builder: (context, snapshot) {
-        //           if (!snapshot.hasData) {
-        //             return Center(
-        //               child: SizedBox(
-        //                 width: 40.0,
-        //                 height: 40.0,
-        //                 child: SpinKitPumpingHeart(
-        //                   color: CustomTheme.of(context).primary,
-        //                   size: 40.0,
-        //                 ),
-        //               ),
-        //             );
-        //           }
-
+     
         //           return InkWell(
         //             splashColor: Colors.transparent,
         //             focusColor: Colors.transparent,
