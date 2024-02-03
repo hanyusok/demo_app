@@ -18,6 +18,7 @@ class ProfilesPage extends StatefulWidget {
 class _ProfilesPageState extends State<ProfilesPage> {
   final User? user = FirebaseAuth.instance.currentUser;
   late List profiles;
+
   // final scaffoldKey = GlobalKey<ScaffoldState>();
   final ProfileService _profileService = ProfileService();
   @override
@@ -321,234 +322,116 @@ class _ProfilesPageState extends State<ProfilesPage> {
     late String profileId = profiles[index].id;
     log('profile id is ${profile.id}');
     log('profileId is $profileId');
-    return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 8.0),
-      child: Card(
-        clipBehavior: Clip.antiAliasWithSaveLayer,
-        color: CustomTheme.of(context).primaryBackground,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(8.0, 4.0, 8.0, 4.0),
-              child: Text(
-                profile.displayName,
-                style: CustomTheme.of(context).bodySmall,
-              ),
-            ),
-            Padding(
-                padding:
-                    const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
-                child: Text(
-                  profile.jumin,
-                  style: CustomTheme.of(context).bodyMedium,
-                )),
-            Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
-              child: Text(
-                profile.phone,
-                style: CustomTheme.of(context).bodyMedium,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 8.0, 0.0),
-              child: Text(
-                profile.createdAt.toString(),
-                style: CustomTheme.of(context).bodyMedium,
-              ),
+    return InkWell(
+      splashColor: Colors.transparent,
+      focusColor: Colors.transparent,
+      hoverColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      onTap: () async {
+        /* profile edit view 로 연결*/
+      },
+      child: Container(
+        width: MediaQuery.sizeOf(context).width * 1.0,
+        decoration: BoxDecoration(
+          color: CustomTheme.of(context).secondaryBackground,
+          boxShadow: const [
+            BoxShadow(
+              blurRadius: 4.0,
+              color: Color(0x230F1113),
+              offset: Offset(0.0, 2.0),
             )
           ],
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              /* 윗줄*/
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          4.0, 0.0, 0.0, 0.0),
+                      child: Text(
+                        profile.displayName,
+                        /* 이름 */
+                        style: CustomTheme.of(context).headlineSmall,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          4.0, 0.0, 0.0, 0.0),
+                      child: Text(
+                        profile.jumin,
+                        /* 주민번호*/
+                        style: CustomTheme.of(context).bodyMedium,
+                      ),
+                    ),
+                  ),
+                  Icon(
+                    Icons.chevron_right_rounded,
+                    color: CustomTheme.of(context).grayLight,
+                    size: 24.0,
+                  ),
+                ],
+              ),
+              /* 둘째 줄*/
+              Padding(
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Card(
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      color: CustomTheme.of(context).primaryBackground,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                8.0, 4.0, 8.0, 4.0),
+                            child: Text(
+                              profile.member,
+                              style: CustomTheme.of(context).bodySmall,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 8.0, 0.0),
+                            child: Text(
+                              profile.phone,
+                              style: CustomTheme.of(context).bodyMedium,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          8.0, 0.0, 0.0, 0.0),
+                      child: Text(
+                        '[비대면]/수정/삭제 ' /* For */,
+                        style: CustomTheme.of(context).bodyMedium,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
-       
-
-        // return ListView.builder(      
-          // itemBuilder: (context, index) {
-            
-     
-        //           return InkWell(
-        //             splashColor: Colors.transparent,
-        //             focusColor: Colors.transparent,
-        //             hoverColor: Colors.transparent,
-        //             highlightColor: Colors.transparent,
-        //             onTap: () async {},
-        //             child: Container(
-        //               width: MediaQuery.sizeOf(context).width * 1.0,
-        //               decoration: BoxDecoration(
-        //                 color: CustomTheme.of(context).secondaryBackground,
-        //                 boxShadow: const [
-        //                   BoxShadow(
-        //                     blurRadius: 4.0,
-        //                     color: Color(0x230F1113),
-        //                     offset: Offset(0.0, 2.0),
-        //                   )
-        //                 ],
-        //                 borderRadius: BorderRadius.circular(8.0),
-        //               ),
-        //               child: Padding(
-        //                 padding: const EdgeInsets.all(12.0),
-        //                 child: Column(
-        //                   mainAxisSize: MainAxisSize.max,
-        //                   children: [
-        //                     Row(
-        //                       mainAxisSize: MainAxisSize.max,
-        //                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //                       children: [
-        //                         Expanded(
-        //                           child: Padding(
-        //                             padding:
-        //                                 const EdgeInsetsDirectional.fromSTEB(
-        //                                     4.0, 0.0, 0.0, 0.0),
-        //                             child: Text(
-        //                               'ss',
-        //                               // listViewAppointmentsRecord
-        //                               //     .appointmentType,
-        //                               style:
-        //                                   CustomTheme.of(context).headlineSmall,
-        //                             ),
-        //                           ),
-        //                         ),
-        //                         Icon(
-        //                           Icons.chevron_right_rounded,
-        //                           color: CustomTheme.of(context).grayLight,
-        //                           size: 24.0,
-        //                         ),
-        //                       ],
-        //                     ),
-        //                     Padding(
-        //                       padding: const EdgeInsetsDirectional.fromSTEB(
-        //                           0.0, 8.0, 0.0, 0.0),
-        //                       child: Row(
-        //                         mainAxisSize: MainAxisSize.max,
-        //                         children: [
-        //                           Card(
-        //                             clipBehavior: Clip.antiAliasWithSaveLayer,
-        //                             color: CustomTheme.of(context)
-        //                                 .primaryBackground,
-        //                             shape: RoundedRectangleBorder(
-        //                               borderRadius: BorderRadius.circular(20.0),
-        //                             ),
-        //                             child: Row(
-        //                               mainAxisSize: MainAxisSize.max,
-        //                               children: [
-        //                                 Padding(
-        //                                   padding: const EdgeInsetsDirectional
-        //                                       .fromSTEB(8.0, 4.0, 8.0, 4.0),
-        //                                   child: Text(
-        //                                     '날짜'
-        //                                     // dateTimeFormat(
-        //                                     //   'MMMEd',
-        //                                     //   listViewAppointmentsRecord
-        //                                     //       .appointmentTime!,
-        //                                     //   locale: FFLocalizations.of(
-        //                                     //           context)
-        //                                     //       .languageCode,
-        //                                     ,
-        //                                     style: CustomTheme.of(context)
-        //                                         .bodySmall,
-        //                                   ),
-        //                                 ),
-        //                                 Padding(
-        //                                   padding: const EdgeInsetsDirectional
-        //                                       .fromSTEB(0.0, 0.0, 8.0, 0.0),
-        //                                   child: Text(
-        //                                     '약속',
-        //                                     // dateTimeFormat(
-        //                                     //   'jm',
-        //                                     //   listViewAppointmentsRecord
-        //                                     //       .appointmentTime!,
-        //                                     //   locale: FFLocalizations.of(
-        //                                     //           context)
-        //                                     //       .languageCode,
-        //                                     // ),
-        //                                     style: CustomTheme.of(context)
-        //                                         .bodyMedium,
-        //                                   ),
-        //                                 ),
-        //                               ],
-        //                             ),
-        //                           ),
-        //                           Padding(
-        //                             padding:
-        //                                 const EdgeInsetsDirectional.fromSTEB(
-        //                                     8.0, 0.0, 0.0, 0.0),
-        //                             child: Text(
-        //                               'for' /* For */,
-        //                               style: CustomTheme.of(context).bodyMedium,
-        //                             ),
-        //                           ),
-        //                           Expanded(
-        //                             child: Padding(
-        //                               padding:
-        //                                   const EdgeInsetsDirectional.fromSTEB(
-        //                                       4.0, 0.0, 0.0, 0.0),
-        //                               child: Text('준비',
-        //                                   // listViewAppointmentsRecord
-        //                                   //     .appointmentName,
-        //                                   style: TextStyle(
-        //                                     color: CustomTheme.of(context)
-        //                                         .secondary,
-        //                                     //   fontSize: CustomTheme
-        //                                     // .of(context).bodyMedium,
-        //                                   )),
-        //                             ),
-        //                           ),
-        //                         ],
-        //                       ),
-        //                     ),
-        //                   ],
-        //                 ),
-        //               ),
-        //             ),
-        //           );
-        //         },
-        //       ),
-        //     );
-        //   },
-        // );
-        //major codes
-  
-
-  
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return StreamBuilder(
-  //     stream: _profileService.getProfiles(),
-  //     builder: (context, snapshot) {
-  //       if (!snapshot.hasData) {
-  //         return Scaffold(
-  //           backgroundColor: CustomTheme.of(context).primaryBackground,
-  //           body: Center(
-  //             child: SizedBox(
-  //               width: 40.0,
-  //               height: 40.0,
-  //               child: SpinKitPumpingHeart(
-  //                 color: CustomTheme.of(context).primary,
-  //                 size: 40.0,
-  //               ),
-  //             ),
-  //           ),
-  //         );
-  //       }
-  //       final List userProfiles = snapshot.data?.docs ?? [];
-  //       if (userProfiles.isEmpty) {
-  //         return const CreateProfilePage();
-  //       }
-  //       final userRecentProfile = userProfiles.last;
-  //       return Scaffold(
-  //         key: scaffoldKey,
-  //         backgroundColor: CustomTheme.of(context).primaryBackground,
-  //         body:
-
-  //       );
-  //     },
-  //   );
-  // }
-

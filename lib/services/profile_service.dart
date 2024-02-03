@@ -27,6 +27,9 @@ class ProfileService {
     return _profileRef!.snapshots();
   }
 
+  /* user profile(사용자 1인) 가져오기*/
+  // Stream<QuerySnapshot> getUserProfile() {}
+
   Future<String?> uploadImageToStorage(String childName, Uint8List file) async {
     Reference ref = _storage.ref().child(childName).child('id');
     UploadTask uploadTask = ref.putData(file);
