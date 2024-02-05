@@ -31,8 +31,30 @@ class Profile {
     updatedAt = map['updatedAt'];
   }
 
+  Profile copyWith({
+    String? id,
+    String? displayName,
+    String? jumin,
+    String? member,
+    String? phone,
+    String? photoUrl,
+    Timestamp? createdAt,
+    Timestamp? updatedAt,
+  }) {
+    return Profile(
+      id: id ?? this.id,
+      displayName: displayName ?? this.displayName,
+      jumin: jumin ?? this.jumin,
+      member: member ?? this.member,
+      phone: phone ?? this.phone,
+      photoUrl: photoUrl ?? this.photoUrl,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
+
   Map<String, dynamic> toMap() {
-    Map<String, dynamic> map = {
+    return {
       'id': id,
       'displayName': displayName,
       'jumin': jumin,
@@ -42,6 +64,5 @@ class Profile {
       'createdAt': createdAt,
       'updatedAt': updatedAt,
     };
-    return map;
   }
 }

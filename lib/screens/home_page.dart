@@ -1,9 +1,9 @@
-// import 'package:demo_app/screens/page_one.dart';
+import 'package:demo_app/screens/page_one.dart';
 import 'package:demo_app/screens/page_two.dart';
-// import 'package:demo_app/screens/page_three.dart';
+import 'package:demo_app/screens/page_three.dart';
 // import 'package:demo_app/screens/page_four.dart';
-import 'package:demo_app/screens/profile/create_profile_page.dart';
-import 'package:demo_app/screens/profile/edit_profile_page.dart';
+// import 'package:demo_app/screens/profile/create_profile_page.dart';
+// import 'package:demo_app/screens/profile/edit_profile_page.dart';
 import 'package:demo_app/screens/profile/profiles_page.dart';
 import 'package:flutter/material.dart';
 import 'package:demo_app/themes/custom_theme.dart';
@@ -18,7 +18,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String _currentPageName = 'pageOne';
+  String _currentPageName = 'tabProfile';
   late Widget? _currentPage;
 
   @override
@@ -36,12 +36,12 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final tabs = {
-      'pageOne': const EditProfilePage(),
+      'pageOne': const PageOne(),
       'pageTwo': const PageTwo(),
-      // 'pageThree': const PageThree(),
-      'pageThree': const ProfilesPage(),
+      'pageThree': const PageThree(),
+      // 'pageThree': const ProfilesPage(),
       // 'pageFour': const PageFour(),
-      'pageFour': const CreateProfilePage(),
+      'tabProfile': const ProfilesPage(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 

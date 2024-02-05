@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo_app/models/profile.dart';
-import 'package:demo_app/screens/profile/profiles_page.dart';
+// import 'package:demo_app/screens/profile/profiles_page.dart';
 import 'package:demo_app/services/util.dart';
 import 'package:demo_app/themes/custom_radio_button.dart';
 import 'package:demo_app/themes/custom_theme.dart';
@@ -62,7 +62,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
           hoverColor: Colors.transparent,
           highlightColor: Colors.transparent,
           onTap: () async {
-            //
+            Navigator.of(context).pop();
           },
           child: Icon(
             Icons.chevron_left_rounded,
@@ -71,7 +71,7 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
           ),
         ),
         title: Text(
-          '사용자 설정',
+          '사용자 추가',
           style: CustomTheme.of(context).headlineSmall,
         ),
         // actions: [],
@@ -369,12 +369,9 @@ class _CreateProfilePageState extends State<CreateProfilePage> {
                               updatedAt: null);
                           _profileService.addProfile(userProfile);
                           if (!context.mounted) return;
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const ProfilesPage()));
+                          Navigator.of(context).pop();
                         },
-                        child: const Text('설정하기'),
+                        child: const Text('추가하기'),
                       ),
                     ),
                   ],

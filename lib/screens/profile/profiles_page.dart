@@ -1,6 +1,8 @@
 import 'dart:developer';
 // import 'package:demo_app/screens/profile/create_profile_page.dart';
 // import 'package:demo_app/models/profile.dart';
+// import 'package:demo_app/screens/profile/create_profile_page.dart';
+// import 'package:demo_app/screens/profile/create_profile_page.dart';
 import 'package:demo_app/services/profile_service.dart';
 import 'package:demo_app/themes/custom_theme.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +18,7 @@ class ProfilesPage extends StatefulWidget {
 }
 
 class _ProfilesPageState extends State<ProfilesPage> {
+  final TextEditingController _memoController = TextEditingController();
   final User? user = FirebaseAuth.instance.currentUser;
   late List profiles;
 
@@ -36,12 +39,45 @@ class _ProfilesPageState extends State<ProfilesPage> {
     log('${user?.uid} : log out!');
   }
 
+  /* QR code 생성 대화창 코드*/
+  void displayQrcodeDialog() async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('QR 코드 생성'),
+            content: TextField(
+              controller: _memoController,
+              decoration: const InputDecoration(hintText: '간단한 증상!!'),
+            ),
+            actions: <Widget>[
+              ElevatedButton(onPressed: () {}, child: const Text('QR code생성'))
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: _appBar(),
       body: _buildUI(),
+      floatingActionButton: _floatingBtn(),
+    );
+  }
+
+  Widget _floatingBtn() {
+    return FloatingActionButton(
+      onPressed: () {
+        Navigator.of(context).pushNamed('/createprofilepage');
+      },
+      backgroundColor: CustomTheme.of(context).primary,
+      tooltip: '추가',
+      child: const Icon(
+        Icons.add,
+        color: Colors.white,
+      ),
     );
   }
 
@@ -175,6 +211,7 @@ class _ProfilesPageState extends State<ProfilesPage> {
                                 },
                               ),
                             ),
+                            /* sign out button*/
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   12.0, 0.0, 0.0, 0.0),
@@ -280,6 +317,18 @@ class _ProfilesPageState extends State<ProfilesPage> {
                 '가족 구성원',
                 style: CustomTheme.of(context).bodySmall,
               ),
+              Padding(
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 0.0, 0.0),
+                child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/createprofilepage');
+                    },
+                    child: Text(
+                      '가족추가',
+                      style: CustomTheme.of(context).bodySmall,
+                    )),
+              )
             ],
           ),
         ),
@@ -295,11 +344,11 @@ class _ProfilesPageState extends State<ProfilesPage> {
     return StreamBuilder(
         stream: _profileService.getProfiles(),
         builder: (context, snapshot) {
+          profiles = snapshot.data?.docs ?? [];
           if (!snapshot.hasData) {
             return _waitingSpin();
             /* or createProfilePage 라우팅 */
           } else {
-            profiles = snapshot.data?.docs ?? [];
             log(profiles.toList().toString());
 
             return _listViewbldr();
@@ -317,10 +366,11 @@ class _ProfilesPageState extends State<ProfilesPage> {
     );
   }
 
+  /* item listing*/
   Widget _itembldr(context, index) {
     final profile = profiles[index].data();
     late String profileId = profiles[index].id;
-    log('profile id is ${profile.id}');
+    // log('profile id is $profile');
     log('profileId is $profileId');
     return InkWell(
       splashColor: Colors.transparent,
@@ -417,17 +467,41 @@ class _ProfilesPageState extends State<ProfilesPage> {
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                          8.0, 0.0, 0.0, 0.0),
-                      child: Text(
-                        '[비대면]/수정/삭제 ' /* For */,
-                        style: CustomTheme.of(context).bodyMedium,
-                      ),
-                    ),
                   ],
                 ),
               ),
+              /* 3째줄 */
+              Padding(
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {},
+                        child: Text(
+                          '수정',
+                          style: CustomTheme.of(context).bodySmall,
+                        )),
+                    ElevatedButton(
+                        onPressed: () {
+                          _profileService.deleteProfile(profileId);
+                        },
+                        child: Text(
+                          '삭제',
+                          style: CustomTheme.of(context).bodySmall,
+                        )),
+                    ElevatedButton(
+                        onPressed: displayQrcodeDialog,
+                        /* QR code 생성 dialogue*/
+                        child: Text(
+                          'QR',
+                          style: CustomTheme.of(context).bodySmall,
+                        ))
+                  ],
+                ),
+              )
             ],
           ),
         ),

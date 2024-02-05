@@ -11,6 +11,7 @@ final User? user = FirebaseAuth.instance.currentUser;
 final _firestore = FirebaseFirestore.instance;
 final _storage = FirebaseStorage.instance;
 late CollectionReference? _profileRef;
+// late Profile profile;
 
 class ProfileService {
   ProfileService() {
@@ -41,5 +42,13 @@ class ProfileService {
   void addProfile(Profile profile) async {
     _profileRef?.add(profile);
     log('user :${user?.uid} created profile!');
+  }
+
+  void updateProfile(String profileId, Profile profile) {
+    _profileRef?.doc(profileId).update(profile.toMap());
+  }
+
+  void deleteProfile(String profileId) {
+    _profileRef?.doc(profileId).delete();
   }
 }
