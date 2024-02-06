@@ -3,7 +3,11 @@ import 'dart:developer';
 // import 'package:demo_app/models/profile.dart';
 // import 'package:demo_app/screens/profile/create_profile_page.dart';
 // import 'package:demo_app/screens/profile/create_profile_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:demo_app/models/memo.dart';
+import 'package:demo_app/services/memo_service.dart';
 import 'package:demo_app/services/profile_service.dart';
+import 'package:demo_app/themes/custom_button.dart';
 import 'package:demo_app/themes/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -24,6 +28,7 @@ class _ProfilesPageState extends State<ProfilesPage> {
 
   // final scaffoldKey = GlobalKey<ScaffoldState>();
   final ProfileService _profileService = ProfileService();
+  final MemoService _memoService = MemoService();
   @override
   void initState() {
     super.initState();
@@ -46,12 +51,47 @@ class _ProfilesPageState extends State<ProfilesPage> {
         builder: (context) {
           return AlertDialog(
             title: const Text('QR 코드 생성'),
+            content: const Text('접수데스크에서 QR코드 무인접수 가능합니다. QR 코드 생성할까요?'),
+            // content: TextField(
+            //   controller: _memoController,
+            //   decoration: const InputDecoration(hintText: '간단한 증상!!'),
+            // ),
+            actions: <Widget>[
+              ElevatedButton(
+                  onPressed: () {
+                    /* QR 코드 생성후  qrcode view list redirect */
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK')),
+            ],
+          );
+        });
+  }
+
+  void displayCallDialog() async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text('비대면'),
             content: TextField(
               controller: _memoController,
               decoration: const InputDecoration(hintText: '간단한 증상!!'),
             ),
             actions: <Widget>[
-              ElevatedButton(onPressed: () {}, child: const Text('QR code생성'))
+              ElevatedButton(
+                  onPressed: () {
+                    /* 비대면 신청 후 전송 */
+                    Memo memo = Memo(
+                        userId: user?.uid,
+                        profileId: profileId,
+                        description: _memoController.text,
+                        createdAt: Timestamp.now());
+                    _memoService.addMemo(memo);
+                    Navigator.of(context).pop();
+                    _memoController.clear();
+                  },
+                  child: const Text('비대면 신청합니다'))
             ],
           );
         });
@@ -467,6 +507,22 @@ class _ProfilesPageState extends State<ProfilesPage> {
                         ],
                       ),
                     ),
+                    ElevatedButton(
+                        onPressed: () {},
+                        style: btnPrimary,
+                        child: Text(
+                          '수정',
+                          style: CustomTheme.of(context).bodySmall,
+                        )),
+                    ElevatedButton(
+                        onPressed: () {
+                          _profileService.deleteProfile(profileId);
+                        },
+                        style: btnPrimary,
+                        child: Text(
+                          '삭제',
+                          style: CustomTheme.of(context).bodySmall,
+                        )),
                   ],
                 ),
               ),
@@ -479,24 +535,17 @@ class _ProfilesPageState extends State<ProfilesPage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     ElevatedButton(
-                        onPressed: () {},
-                        child: Text(
-                          '수정',
-                          style: CustomTheme.of(context).bodySmall,
-                        )),
-                    ElevatedButton(
-                        onPressed: () {
-                          _profileService.deleteProfile(profileId);
-                        },
-                        child: Text(
-                          '삭제',
-                          style: CustomTheme.of(context).bodySmall,
-                        )),
-                    ElevatedButton(
                         onPressed: displayQrcodeDialog,
                         /* QR code 생성 dialogue*/
                         child: Text(
                           'QR',
+                          style: CustomTheme.of(context).bodySmall,
+                        )),
+                    ElevatedButton(
+                        onPressed: displayCallDialog,
+                        /* 비대면 신청 dialogue*/
+                        child: Text(
+                          '비대면 신청',
                           style: CustomTheme.of(context).bodySmall,
                         ))
                   ],
