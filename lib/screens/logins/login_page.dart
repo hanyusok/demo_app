@@ -402,6 +402,62 @@ class _LoginPageState extends State<LoginPage>
                                                         CustomTheme.of(context)
                                                             .primaryBackground,
                                                     elevation: 3.0,
+                                                    minimumSize: const Size(
+                                                        230, 50),
+                                                    textStyle: const TextStyle(
+                                                        fontSize: 18),
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        40))),
+                                                onPressed: () {
+                                                  //kakao
+                                                },
+                                                child:
+                                                    const Text('Kakao Sign In')),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0.0, 10.0, 0.0, 24.0),
+                                            child: ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                    foregroundColor:
+                                                        CustomTheme.of(context)
+                                                            .primaryText,
+                                                    backgroundColor:
+                                                        CustomTheme.of(context)
+                                                            .primaryBackground,
+                                                    elevation: 3.0,
+                                                    minimumSize: const Size(
+                                                        230, 50),
+                                                    textStyle: const TextStyle(
+                                                        fontSize: 18),
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        40))),
+                                                onPressed: () {
+                                                  //kakao
+                                                },
+                                                child:
+                                                    const Text('Kakao logout')),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0.0, 10.0, 0.0, 24.0),
+                                            child: ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                    foregroundColor:
+                                                        CustomTheme.of(context)
+                                                            .primaryText,
+                                                    backgroundColor:
+                                                        CustomTheme.of(context)
+                                                            .primaryBackground,
+                                                    elevation: 3.0,
                                                     minimumSize:
                                                         const Size(230, 50),
                                                     textStyle: const TextStyle(

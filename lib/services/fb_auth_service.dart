@@ -4,6 +4,7 @@
 
 // import 'package:demo_app/services/show_otp_dialog.dart';
 import 'dart:developer';
+// import 'dart:html';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 class FbAuthService {
   final FirebaseAuth _auth;
   FbAuthService(this._auth);
+  // late UserCredential cred;
 
   User? get user => _auth.currentUser!;
   //state persistence
@@ -27,8 +29,8 @@ class FbAuthService {
     try {
       await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      if (!context.mounted) return;
-      log('${user!.uid} logged in.');
+      // if (!context.mounted) return;
+      // log('${user!.uid} logged in.');
       // 확인 이메일 전송
       if (!context.mounted) return;
       await sendEmailVerify(context);
@@ -166,10 +168,10 @@ class FbAuthService {
         // ));
       }
     }
-    if (!_auth.currentUser!.emailVerified) {
-      if (!context.mounted) return;
-      await sendEmailVerify(context);
-    }
+    // if (!_auth.currentUser!.emailVerified) {
+    // if (!context.mounted) return;
+    // await sendEmailVerify(context);
+    // }
   }
 
   //Email verification

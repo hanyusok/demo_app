@@ -24,6 +24,8 @@ dependencies:
   auto_size_text: ^3.0.0
   image_picker: ^1.0.7
   firebase_storage: ^11.6.1
+  kakao_flutter_sdk_user: ^1.8.0
+  kakao_flutter_sdk_common: ^1.8.0
 
 dev_dependencies:
   flutter_test:
