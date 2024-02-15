@@ -97,7 +97,9 @@ class _LoginPageState extends State<LoginPage>
   void logoutAsKakao() async {
     try {
       //
-    } catch (e) {}
+    } catch (e) {
+      //
+    }
   }
 
   @override
