@@ -19,3 +19,5 @@ https://youtu.be/5kjjkIdwwN8?si=ancTZP11mOqJp0fM
 
 ### kakao social login
 https://www.youtube.com/watch?v=Ar6RdDf77xQ&t=347s&ab_channel=%EC%98%A4%EC%A4%80%EC%84%9D%EC%9D%98%EC%83%9D%EC%A1%B4%EC%BD%94%EB%94%A9
+https://www.youtube.com/watch?v=BQ7iXKLqgHQ
+https://www.youtube.com/watch?v=HZnuhshghuA&t=39s

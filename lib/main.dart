@@ -18,15 +18,18 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-import 'package:kakao_flutter_sdk_common/kakao_flutter_sdk_common.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
+// import 'package:kakao_flutter_sdk_common/kakao_flutter_sdk_common.dart';
 
 Future<void> main() async {
+  /* kakao init*/
+  kakao.KakaoSdk.init(
+    nativeAppKey: '73f47c741e295d7406e75fb3d246065a',
+    javaScriptAppKey: '5c1619e6e61fbbdbfc6e8a11b9f396cd',
+  );
+
+  /* firebase auth init*/
   WidgetsFlutterBinding.ensureInitialized();
-  // KakaoSdk.init({
-  //   nativeAppKey: '73f47c741e295d7406e75fb3d246065a',
-  //   javaScriptAppKey: '5c1619e6e61fbbdbfc6e8a11b9f396cd',
-  // });
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   FirebaseFirestore.instance.settings =
       const Settings(persistenceEnabled: true);

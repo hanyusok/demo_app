@@ -1,18 +1,29 @@
 import 'dart:developer';
 
 import 'package:flutter/services.dart';
-import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
+import 'package:http/http.dart' as http;
 
 class KakaoAuthService {
-  KakaoAuthService();
-  User? user;
+  // final KakaoAuthService _kakaoAuthService;
+  // KakaoAuthService(this._kakaoAuthService);
+  kakao.User? user;
   bool isLogined = false;
+  final String url = 'https://';
+
+  /* kakao custom token*/
+  Future<String> createCustomToken(Map<String, dynamic> user) async {
+    final customTokenResponse = await http.post(Uri.parse(url), body: user);
+    return customTokenResponse.body;
+    //
+  }
+
   // @override
   Future<bool> login() async {
 // 카카오톡 실행이 가능하면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
-    if (await isKakaoTalkInstalled()) {
+    if (await kakao.isKakaoTalkInstalled()) {
       try {
-        await UserApi.instance.loginWithKakaoTalk();
+        await kakao.UserApi.instance.loginWithKakaoTalk();
         log('카카오톡으로 로그인 성공');
         return true;
       } catch (error) {
@@ -25,7 +36,7 @@ class KakaoAuthService {
         }
         // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인
         try {
-          await UserApi.instance.loginWithKakaoAccount();
+          await kakao.UserApi.instance.loginWithKakaoAccount();
           log('카카오계정으로 로그인 성공');
           return true;
         } catch (error) {
@@ -35,7 +46,7 @@ class KakaoAuthService {
       }
     } else {
       try {
-        await UserApi.instance.loginWithKakaoAccount();
+        await kakao.UserApi.instance.loginWithKakaoAccount();
         log('카카오계정으로 로그인 성공');
         return true;
       } catch (error) {
@@ -48,7 +59,7 @@ class KakaoAuthService {
   // @override
   Future<bool> logout() async {
     try {
-      await UserApi.instance.unlink();
+      await kakao.UserApi.instance.unlink();
       log('로그아웃 성공, SDK에서 토큰 삭제');
       return true;
     } catch (error) {
