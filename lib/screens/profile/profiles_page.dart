@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:demo_app/themes/custom_icon_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:demo_app/services/fb_auth_service.dart';
 
 class ProfilesPage extends StatefulWidget {
   const ProfilesPage({super.key});
@@ -39,9 +40,8 @@ class _ProfilesPageState extends State<ProfilesPage> {
     super.dispose();
   }
 
-  void signout() async {
-    await FirebaseAuth.instance.signOut();
-    log('${user?.uid} : log out!');
+  void userSignOut() async {
+    await FbAuthService(FirebaseAuth.instance).userLogOut();
   }
 
   /* QR code 생성 대화창 코드*/
@@ -277,7 +277,7 @@ class _ProfilesPageState extends State<ProfilesPage> {
                                     color: CustomTheme.of(context).secondary,
                                     size: 24.0,
                                   ),
-                                  onPressed: signout,
+                                  onPressed: userSignOut,
                                 ),
                               ),
                             ),
@@ -294,7 +294,8 @@ class _ProfilesPageState extends State<ProfilesPage> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Text(
-                        '사람이름',
+                        user?.displayName ?? 'name?',
+                        // '사람이름',
                         // userRecentProfile['displayName'],
                         style: CustomTheme.of(context).headlineSmall,
                       ),

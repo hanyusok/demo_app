@@ -1,12 +1,10 @@
 // import 'dart:developer';
-
 // import 'dart:html';
-
 // import 'package:demo_app/services/show_otp_dialog.dart';
 import 'dart:developer';
 // import 'dart:html';
-
-import 'package:flutter/foundation.dart';
+// import 'package:flutter/foundation.dart';
+import 'package:demo_app/screens/profile/profiles_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -20,7 +18,7 @@ class FbAuthService {
   //state persistence
   Stream<User?> get authState => _auth.authStateChanges();
 
-  //Email Sign up
+  /* Create user by email Sign up */
   Future<void> signUpWithEmail({
     required String email,
     required String password,
@@ -29,42 +27,85 @@ class FbAuthService {
     try {
       await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      // if (!context.mounted) return;
-      // log('${user!.uid} logged in.');
+      if (user != null) {
+        log('user: ${user!.uid} login successfully.');
+      }
+
       // 확인 이메일 전송
       if (!context.mounted) return;
       await sendEmailVerify(context);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         log('비밀번호 오류!');
-        if (!context.mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('비밀번호 오류!'),
-          duration: Duration(seconds: 3),
-        ));
+        // if (!context.mounted) return;
+        // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        //   content: Text('비밀번호 오류!'),
+        //   duration: Duration(seconds: 3),
+        // ));
       } else if (e.code == 'email-already-in-use') {
         log('이메일 중복!');
-        if (!context.mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('이메일 중복 오류!'),
-          duration: Duration(seconds: 3),
-        ));
+        // if (!context.mounted) return;
+        // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        //   content: Text('이메일 중복 오류!'),
+        //   duration: Duration(seconds: 3),
+        // ));
       } else if (e.code == 'invalid-email') {
         log('이메일 유효하지 않습니다.');
-        if (!context.mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('이메일 형식 오류!'),
-          duration: Duration(seconds: 3),
-        ));
+        // if (!context.mounted) return;
+        // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        //   content: Text('이메일 형식 오류!'),
+        //   duration: Duration(seconds: 3),
+        // ));
       }
     }
   }
 
-  // Anonymous sign in
+  /* Login with email and password */
+  Future<void> loginWithEmail({
+    required String email,
+    required String password,
+    required BuildContext context,
+  }) async {
+    try {
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      if (user != null) {
+        log('user: ${user!.uid} login successfully.');
+      }
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        log('user not found!');
+        // if (!context.mounted) return;
+        // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        //   content: Text('사용자 계정 없음!'),
+        //   duration: Duration(seconds: 3),
+        // ));
+      } else if (e.code == 'invalid-email') {
+        log('invalid email!');
+        // if (!context.mounted) return;
+        // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        //   content: Text('유효하지 않는 이메일!'),
+        //   duration: Duration(seconds: 3),
+        // ));
+      } else if (e.code == 'wrong-password') {
+        log('wrong password!');
+        // if (!context.mounted) return;
+        // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        //   content: Text('비밀번호 오류!'),
+        //   duration: Duration(seconds: 3),
+        // ));
+      }
+    }
+    // if (!_auth.currentUser!.emailVerified) {
+    // if (!context.mounted) return;
+    // await sendEmailVerify(context);
+    // }
+  }
+
+  /* Anonymous login */
   Future<void> anonymousUserSign(BuildContext context) async {
     try {
       await _auth.signInAnonymously();
-      if (!context.mounted) return;
+      // if (!context.mounted) return;
       log('${user!.uid} logged in.');
     } on FirebaseAuthException catch (e) {
       log(e.message.toString());
@@ -72,34 +113,60 @@ class FbAuthService {
   }
 
   // Google Sign in
-  Future<void> googleUserLogin(BuildContext context) async {
-    try {
-      if (kIsWeb) {
-        GoogleAuthProvider googleProvider = GoogleAuthProvider();
-        googleProvider
-            .addScope('https://wwww.googleapis.com/auth/contacts.readonly');
-        await _auth.signInWithPopup(googleProvider);
-      } else {
-        final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-        final GoogleSignInAuthentication? googleAuth =
-            await googleUser?.authentication;
+  // Future<void> googleUserLogin(BuildContext context) async {
+  //   try {
+  //     if (kIsWeb) {
+  //       GoogleAuthProvider googleProvider = GoogleAuthProvider();
+  //       googleProvider
+  //           .addScope('https://wwww.googleapis.com/auth/contacts.readonly');
+  //       await _auth.signInWithPopup(googleProvider);
+  //     } else {
+  //       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+  //       final GoogleSignInAuthentication? googleAuth =
+  //           await googleUser?.authentication;
 
-        if (googleAuth?.accessToken != null && googleAuth?.idToken != null) {
-          final credential = GoogleAuthProvider.credential(
-              accessToken: googleAuth?.accessToken,
-              idToken: googleAuth?.idToken);
-          UserCredential userCredential =
-              await _auth.signInWithCredential(credential);
-          if (userCredential.user != null) {
-            if (userCredential.additionalUserInfo!.isNewUser) {
-              //
-            }
-          }
-        }
-      }
-    } on FirebaseAuthException catch (e) {
-      log(e.message.toString());
-    }
+  //       if (googleAuth?.accessToken != null && googleAuth?.idToken != null) {
+  //         final credential = GoogleAuthProvider.credential(
+  //             accessToken: googleAuth?.accessToken,
+  //             idToken: googleAuth?.idToken);
+  //         UserCredential userCredential =
+  //             await _auth.signInWithCredential(credential);
+  //         if (userCredential.user != null) {
+  //           if (userCredential.additionalUserInfo!.isNewUser) {
+  //             //
+  //           }
+  //         }
+  //       }
+  //     }
+  //   } on FirebaseAuthException catch (e) {
+  //     log(e.message.toString());
+  //   }
+  // }
+
+  Future<void> signInWithGoogle(BuildContext context) async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    // Once signed in, return the UserCredential
+    await _auth.signInWithCredential(credential).then((value) {
+      //go to dashboard
+      log('google login success');
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => const ProfilesPage()));
+    }).onError((error, stackTrace) {
+      //error show
+      log("error $error");
+    });
   }
 
   //PHONE SIGN IN
@@ -136,44 +203,6 @@ class FbAuthService {
   //   );
   // }
 
-  //Email Login
-  Future<void> loginWithEmail({
-    required String email,
-    required String password,
-    required BuildContext context,
-  }) async {
-    try {
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        log(e.message.toString());
-        // if (!context.mounted) return;
-        // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        //   content: Text('사용자 계정 없음!'),
-        //   duration: Duration(seconds: 3),
-        // ));
-      } else if (e.code == 'invalid-email') {
-        log(e.message.toString());
-        // if (!context.mounted) return;
-        // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        //   content: Text('유효하지 않는 이메일!'),
-        //   duration: Duration(seconds: 3),
-        // ));
-      } else if (e.code == 'wrong-password') {
-        log(e.message.toString());
-        // if (!context.mounted) return;
-        // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        //   content: Text('비밀번호 오류!'),
-        //   duration: Duration(seconds: 3),
-        // ));
-      }
-    }
-    // if (!_auth.currentUser!.emailVerified) {
-    // if (!context.mounted) return;
-    // await sendEmailVerify(context);
-    // }
-  }
-
   //Email verification
   Future<void> sendEmailVerify(BuildContext context) async {
     try {
@@ -194,5 +223,11 @@ class FbAuthService {
     }
   }
 
-  // log out
+  /* log out */
+  Future<void> userLogOut() async {
+    await _auth.signOut();
+    if (user == null) {
+      log('user: logout successfully.');
+    }
+  }
 }

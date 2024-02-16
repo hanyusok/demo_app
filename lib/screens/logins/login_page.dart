@@ -96,9 +96,10 @@ class _LoginPageState extends State<LoginPage>
   /* kakao logout*/
   void logoutAsKakao() async {
     try {
-      //
-    } catch (e) {
-      //
+      await kakao.UserApi.instance.logout();
+      log('로그아웃 성공, SDK에서 토큰 삭제');
+    } catch (error) {
+      log('로그아웃 실패, SDK에서 토큰 삭제 $error');
     }
   }
 
@@ -470,19 +471,15 @@ class _LoginPageState extends State<LoginPage>
                                                         CustomTheme.of(context)
                                                             .primaryBackground,
                                                     elevation: 3.0,
-                                                    minimumSize: const Size(
-                                                        230, 50),
+                                                    minimumSize:
+                                                        const Size(230, 50),
                                                     textStyle: const TextStyle(
                                                         fontSize: 18),
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        40))),
-                                                onPressed: () {
-                                                  //kakao
-                                                },
+                                                    shape: RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(40))),
+                                                onPressed: logoutAsKakao,
                                                 child:
                                                     const Text('Kakao logout')),
                                           ),
@@ -509,7 +506,8 @@ class _LoginPageState extends State<LoginPage>
                                                 onPressed: () {
                                                   FbAuthService(
                                                           FirebaseAuth.instance)
-                                                      .googleUserLogin(context);
+                                                      .signInWithGoogle(
+                                                          context);
                                                 },
                                                 child: const Text(
                                                     'Google Sign In')),
