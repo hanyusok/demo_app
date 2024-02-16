@@ -44,7 +44,7 @@ class _LoginPageState extends State<LoginPage>
     _passwordController.dispose();
   }
 
-  void singUpUser() async {
+  void signUpUser() async {
     await FbAuthService(FirebaseAuth.instance).signUpWithEmail(
         email: _emailController.text,
         password: _passwordController.text,
@@ -52,10 +52,13 @@ class _LoginPageState extends State<LoginPage>
   }
 
   void loginUser() async {
-    await FbAuthService(FirebaseAuth.instance).loginWithEmail(
-        email: _emailController.text,
-        password: _passwordController.text,
-        context: context);
+    await FbAuthService(FirebaseAuth.instance)
+        .loginWithEmail(
+            email: _emailController.text,
+            password: _passwordController.text,
+            context: context)
+        .then((_) => log('successful login'))
+        .onError((error, stackTrace) => log('login failure'));
   }
 
   void anonymousUser() async {
@@ -155,6 +158,7 @@ class _LoginPageState extends State<LoginPage>
                               ],
                             ),
                           ),
+                          /* 대문 사진 이미지 */
                           Expanded(
                             child: Column(children: [
                               Align(
@@ -183,6 +187,7 @@ class _LoginPageState extends State<LoginPage>
                                   },
                                 ),
                               ),
+                              /* 로그인 vs 계정 만들기 tab */
                               Expanded(
                                   child: TabBarView(
                                 controller: _tabController,
@@ -357,10 +362,7 @@ class _LoginPageState extends State<LoginPage>
                                                       .fromSTEB(
                                                       0.0, 24.0, 0.0, 10.0),
                                               child: ElevatedButton(
-                                                onPressed: () {
-                                                  loginUser();
-                                                  log('logged in!');
-                                                },
+                                                onPressed: loginUser,
                                                 style: ElevatedButton.styleFrom(
                                                     foregroundColor:
                                                         Colors.white,
@@ -686,7 +688,7 @@ class _LoginPageState extends State<LoginPage>
                                                       .fromSTEB(
                                                       0.0, 24.0, 0.0, 24.0),
                                               child: ElevatedButton(
-                                                onPressed: singUpUser,
+                                                onPressed: signUpUser,
                                                 style: ElevatedButton.styleFrom(
                                                     foregroundColor:
                                                         Colors.white,
