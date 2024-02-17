@@ -30,6 +30,8 @@ class _ProfilesPageState extends State<ProfilesPage> {
   // final scaffoldKey = GlobalKey<ScaffoldState>();
   final ProfileService _profileService = ProfileService();
   final MemoService _memoService = MemoService();
+  final FbAuthService _fbAuth = FbAuthService();
+
   @override
   void initState() {
     super.initState();
@@ -41,7 +43,7 @@ class _ProfilesPageState extends State<ProfilesPage> {
   }
 
   void userSignOut() async {
-    await FbAuthService(FirebaseAuth.instance).userLogOut();
+    _fbAuth.userLogOut();
   }
 
   /* QR code 생성 대화창 코드*/

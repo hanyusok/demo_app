@@ -17,7 +17,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-
+import 'package:demo_app/services/fb_auth_service.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
 // import 'package:kakao_flutter_sdk_common/kakao_flutter_sdk_common.dart';
 
@@ -46,6 +46,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   // final ThemeMode _themeMode = CustomTheme.themeMode; /* custom setting*/
   // This widget is the root of your application.
+  final FbAuthService _fbAuth = FbAuthService();
 
   @override
   void initState() {
@@ -54,7 +55,8 @@ class _MyAppState extends State<MyApp> {
 
   Widget _getLandingPage() {
     return StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
+        // stream: FirebaseAuth.instance.authStateChanges(),
+        stream: _fbAuth.authState,
         builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
             return const HomePage();

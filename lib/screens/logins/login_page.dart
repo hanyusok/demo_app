@@ -6,11 +6,12 @@ import 'dart:developer';
 // import 'package:demo_app/auth/auth_manager.dart';
 // import 'package:demo_app/services/kakao_auth_service.dart';
 import 'package:demo_app/themes/custom_theme.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:demo_app/services/fb_auth_service.dart';
 import 'package:flutter/services.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
+import 'package:sign_in_button/sign_in_button.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -27,6 +28,7 @@ class _LoginPageState extends State<LoginPage>
   late TabController _tabController;
   late bool _passwordLoginVisibility;
   // final User? user = FirebaseAuth.instance.currentUser;
+  final FbAuthService _fbAuth = FbAuthService();
 
   @override
   void initState() {
@@ -45,24 +47,21 @@ class _LoginPageState extends State<LoginPage>
   }
 
   void signUpUser() async {
-    await FbAuthService(FirebaseAuth.instance).signUpWithEmail(
+    await _fbAuth.signUpWithEmail(
         email: _emailController.text,
         password: _passwordController.text,
         context: context);
   }
 
-  void loginUser() async {
-    await FbAuthService(FirebaseAuth.instance)
-        .loginWithEmail(
-            email: _emailController.text,
-            password: _passwordController.text,
-            context: context)
-        .then((_) => log('successful login'))
-        .onError((error, stackTrace) => log('login failure'));
+  void loginUser() {
+    _fbAuth.loginWithEmail(
+        email: _emailController.text,
+        password: _passwordController.text,
+        context: context);
   }
 
   void anonymousUser() async {
-    await FbAuthService(FirebaseAuth.instance).anonymousUserSign(context);
+    await _fbAuth.anonymousUserSign(context);
   }
 
   /* kakao login*/
@@ -506,14 +505,16 @@ class _LoginPageState extends State<LoginPage>
                                                             BorderRadius
                                                                 .circular(40))),
                                                 onPressed: () {
-                                                  FbAuthService(
-                                                          FirebaseAuth.instance)
-                                                      .signInWithGoogle(
-                                                          context);
+                                                  _fbAuth.signInWithGoogle(
+                                                      context);
                                                 },
                                                 child: const Text(
                                                     'Google Sign In')),
                                           ),
+                                          SignInButton(Buttons.google,
+                                              text: "Google", onPressed: () {
+                                            //
+                                          })
                                         ])),
                                   ),
 
